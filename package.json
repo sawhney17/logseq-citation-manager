@@ -10,9 +10,16 @@
   "license": "MIT",
   "dependencies": {
     "@logseq/libs": "^0.0.1-alpha.35",
+    "@retorquere/bibtex-parser": "^6.3.3",
+    "axios": "^0.27.1",
+    "bibtex-parse": "^2.1.0",
+    "bibtex-parse-js": "^0.0.24",
+    "minisearch": "^4.0.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-use": "^17.3.2"
+    "react-input-switch": "^2.2.2",
+    "react-use": "^17.3.2",
+    "rn-segmented-control": "^1.1.2"
   },
   "devDependencies": {
     "@semantic-release/changelog": "6.0.1",

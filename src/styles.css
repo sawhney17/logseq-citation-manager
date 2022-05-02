@@ -1,0 +1,90 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  /* Demo only */
+  body {
+    /* background: #f1f1f1; */
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .selected-item {
+    text-align: center;
+  }
+  
+  .controls-container {
+    --highlight-width: auto;
+    --highlight-x-pos: 0;
+  
+    display: flex;
+  }
+  
+  .controls {
+    display: inline-flex;
+    justify-content: space-between;
+    background: #2a2a2a;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    max-width: 50vh;
+    padding-inline: 10px;
+    margin: auto;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .controls input {
+    opacity: 0;
+    margin: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    cursor: pointer;
+    height: 100%;
+  }
+  
+  .segment {
+    /* /* width: 100%;  */
+    /* uncomment for each segment to have matching width */ 
+    min-width: 120px;
+    position: relative;
+    text-align: center;
+    z-index: 1;
+  }
+  
+  .segment label {
+    cursor: pointer;
+    display: block;
+    font-weight: 300;
+    padding: 10px;
+    transition: color 0.5s ease;
+    font-size: medium;
+  }
+  
+  .segment.active label {
+    color: #fff;
+  }
+  
+  .controls::before {
+    content: "";
+    background: #393939;
+    border-radius: 8px;
+    width: var(--highlight-width);
+    transform: translateX(var(--highlight-x-pos));
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: 0;
+    z-index: 0;
+  }
+  
+  /* Only allow transitions once component is ready */
+  .controls.ready::before {
+    transition: transform 0.3s ease, width 0.3s ease;
+  }
+  
