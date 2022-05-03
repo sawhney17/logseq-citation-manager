@@ -1,3 +1,11 @@
+## [1.0.3](https://github.com/sawhney17/logseq-citation-manager/compare/v1.0.2...v1.0.3) (2022-05-03)
+
+
+### Bug Fixes
+
+* **keyboard shortcuts:** Use better shortcuts ([4c316c1](https://github.com/sawhney17/logseq-citation-manager/commit/4c316c134052d278876385dad0a0a163a4a7a813))
+* **search:** unable to navigate when one result ([43464fb](https://github.com/sawhney17/logseq-citation-manager/commit/43464fbbcb586b190d75d3e0914c104c10c18204))
+
 ## [1.0.2](https://github.com/sawhney17/logseq-citation-manager/compare/v1.0.1...v1.0.2) (2022-05-03)
 
 
