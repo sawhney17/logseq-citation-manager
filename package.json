@@ -1,7 +1,7 @@
 {
   "name": "logseq-citation-manager",
   "version": "1.0.3",
-  "description": "Citation manager for logseq",
+  "description": "A citation manager plugin for logseq, integrating Paperpile, Zotero and any Bibtex exportable citation manager",
   "main": "dist/index.html",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@logseq/libs": "^0.0.1-alpha.35",
+    "@logseq/libs": "^0.0.6",
     "@retorquere/bibtex-parser": "^6.3.3",
     "axios": "^0.27.1",
     "minisearch": "^4.0.3",
@@ -44,6 +44,6 @@
   },
   "logseq": {
     "id": "logseq-citation-manager",
-    "icon": "./logo.svg"
+    "icon": "./src/icon.png"
   }
 }
