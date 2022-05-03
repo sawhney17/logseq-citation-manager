@@ -3,14 +3,12 @@ import "virtual:windi.css";
 
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
 import axios from "axios";
 import { logseq as PL } from "../package.json";
 import { SettingSchemaDesc } from "@logseq/libs/dist/LSPlugin.user";
 import * as BibTeXParser from "@retorquere/bibtex-parser";
 import SearchBar from "./searchbar";
 import { handleClosePopup } from "./handleClosePopup";
-import MiniSearch from "minisearch";
 const css = (t, ...args) => String.raw(t, ...args);
 
 export var paperpile = "";
@@ -191,26 +189,26 @@ function main() {
     zIndex: 11,
   });
 
-  const openIconName = "template-plugin-open";
+  // const openIconName = "template-plugin-open";
 
-  logseq.provideStyle(css`
-    .${openIconName} {
-      opacity: 0.55;
-      font-size: 20px;
-      margin-top: 4px;
-    }
+  // logseq.provideStyle(css`
+  //   .${openIconName} {
+  //     opacity: 0.55;
+  //     font-size: 20px;
+  //     margin-top: 4px;
+  //   }
 
-    .${openIconName}:hover {
-      opacity: 0.9;
-    }
-  `);
+  //   .${openIconName}:hover {
+  //     opacity: 0.9;
+  //   }
+  // `);
 
-  logseq.App.registerUIItem("toolbar", {
-    key: openIconName,
-    template: `
-      <div data-on-click="show" class="${openIconName}">⚙️</div>
-    `,
-  });
+  // logseq.App.registerUIItem("toolbar", {
+  //   key: openIconName,
+  //   template: `
+  //     <div data-on-click="show" class="${openIconName}">⚙️</div>
+  //   `,
+  // });
 
   logseq.App.registerCommand(
     "openAsPage",
