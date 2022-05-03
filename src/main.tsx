@@ -14,7 +14,7 @@ import MiniSearch from "minisearch";
 const css = (t, ...args) => String.raw(t, ...args);
 
 export var paperpile = "";
-export var paperpileParsed = [];
+export var paperpileParsed = []
 const pluginId = PL.id;
 const settings: SettingSchemaDesc[] = [
   {
@@ -25,27 +25,44 @@ const settings: SettingSchemaDesc[] = [
     type: "string",
   },
   {
-    key: "referenceFormat",
-    title: "Format of created references",
-    description: "Enter the desired citation format, use {citekey}",
-    default: "{citekey}",
-    type: "string",
-  },
-  {
-    key: "pageTemplate",
-    title: "Template for the page",
-    description: "Enter the path your paperpile DB",
-    default: "path/to/paperpile",
-    type: "string",
-  },
-  {
     key: "pageProperties",
     title: "Properties to be added by default",
     description: "Type the properties you want to be added by default",
-    default: ["author", "title", "journal", "year", "volume", "number", "pages", "doi", "url"],
+    default: [
+      "author",
+      "title",
+      "journal",
+      "year",
+      "volume",
+      "number",
+      "pages",
+      "doi",
+      "url",
+    ],
     type: "enum",
     enumPicker: "checkbox",
-    enumChoices: ["author", "title", "journal", "year", "url", "abstract", "keywords", "publisher"],
+    enumChoices: [
+      "author",
+      "title",
+      "journal",
+      "year",
+      "url",
+      "abstract",
+      "keywords",
+      "publisher",
+      "volume",
+      "number",
+      "pages",
+      "doi",
+      "url",
+    ],
+  },
+  {
+    key: "pageFirstBlock",
+    title: "First block of the page",
+    description: "Optional: Enter the first block of the page. This will mean that the following text will automatically be inserted with the properties. ",
+    default: "",
+    type: "string",
   },
   {
     key: "smartsearch",
@@ -63,38 +80,95 @@ const settings: SettingSchemaDesc[] = [
     default: true,
     type: "boolean",
   },
+  {
+    key: "inlineReferenceProperties",
+    title: "Properties to be included as inline property",
+    description: "Select the properties you want to be included as inline property",
+    default: [
+      "author",
+      "title",
+    ],
+    type: "enum",
+    enumPicker: "checkbox",
+    enumChoices: [
+      "author",
+      "title",
+      "journal",
+      "year",
+      "url",
+      "abstract",
+      "keywords",
+      "publisher",
+    ],
+  },
+  {
+    key: "inlineReferenceFirstBlock",
+    title: "First block of the inline reference",
+    description: "Enter the first block of the inline reference. This will mean that the following text will automatically be inserted with the properties. You can use the placeholders {author}, {citekey}, {title}, {journal}, {year}, {volume}, {number}, {pages}, {doi}, {url}, {abstract} and {type}",
+    default: "",
+    type: "string",
+  },
+  {
+    key: "inlineReferenceSecondBlock",
+    title: "Optional Second block of the inline reference",
+    description: "Enter the second block of the inline reference. This will mean that the following text will automatically be inserted after the first block. You can use the placeholders {author}, {citekey}, {title}, {journal}, {year}, {volume}, {number}, {pages}, {doi}, {url}, {abstract} and {type}",
+    default: "",
+    type: "string",
+  },
+  {
+    key: "indentSecondBlockofInlineReference",
+    title: "Indent first block of inline reference?",
+    description: "Would you like to indent the second block of the inline reference?",
+    default: true,
+    type: "boolean",
+  },
 ];
 
-const createDB = () => {
+const dispatchPaperpileParse = (mode) => {
+  if (paperpile === "") {
+    getPaperPile(mode);
+  } else {
+    showDB(paperpileParsed, mode);
+  }
+};
+const createDB = (mode) => {
   const options: BibTeXParser.ParserOptions = {
     errorHandler: (err) => {
       console.warn("Citation plugin: error loading BibLaTeX entry:", err);
     },
   };
-  const parsed = BibTeXParser.parse(paperpile, options) as BibTeXParser.Bibliography;
-  showDB(parsed.entries, 0)
-}
+  const parsed = BibTeXParser.parse(
+    paperpile,
+    options
+  ) as BibTeXParser.Bibliography;
+
+  paperpileParsed = parsed.entries
+  console.log(paperpileParsed)
+  dispatchPaperpileParse(mode);
+};
 
 const showDB = (parsed, mode) => {
-  console.log(parsed)
   paperpileParsed = parsed;
+  console.log("mode is ", mode);
+
+  ReactDOM.unmountComponentAtNode(document.getElementById("app"));
   ReactDOM.render(
     <React.StrictMode>
-      <SearchBar paperpileParsed={{ parse: paperpileParsed, currentModeInput: mode}}/>
+      <SearchBar
+        paperpileParsed={{ parse: paperpileParsed, currentModeInput: mode }}
+      />
     </React.StrictMode>,
     document.getElementById("app")
   );
   logseq.showMainUI();
   handleClosePopup();
-}
-const parseBibtex = async () => {
-  
 };
-const getPaperPile = async () => {
+
+const getPaperPile = async (mode) => {
   console.log(`file://${logseq.settings.paperpilePath}`);
   axios.get(`file://${logseq.settings.paperpilePath}`).then((result) => {
     paperpile = result.data;
-    createDB();
+    createDB(mode);
   });
 };
 logseq.useSettingsSchema(settings);
@@ -103,12 +177,7 @@ function main() {
   function createModel() {
     return {
       show() {
-        if (paperpile === "") {
-          getPaperPile();
-        }
-        else {
-          showDB(paperpileParsed, 0)
-        }
+        dispatchPaperpileParse(0);
       },
     };
   }
@@ -138,6 +207,40 @@ function main() {
       <div data-on-click="show" class="${openIconName}">⚙️</div>
     `,
   });
+
+  logseq.App.registerCommand(
+    "insertLink",
+    {
+      key: "inlineLitNote",
+      label: "Show Paperpile DB",
+      keybinding: { binding: "mod+shift+l" },
+    },
+    () => {
+      dispatchPaperpileParse(2);
+    }
+  );
+  logseq.App.registerCommand(
+    "openAsPage",
+    {
+      key: "openedLitNote",
+      label: "Create Inline Link to Lit Note",
+      keybinding: { binding: "mod+shift+o" },
+    },
+    () => {
+      dispatchPaperpileParse(1);
+    }
+  );
+  logseq.App.registerCommand(
+    "insertInline",
+    {
+      key: "inlineNote",
+      label: "Create Inline Note",
+      keybinding: { binding: "mod+shift+i" },
+    },
+    () => {
+      dispatchPaperpileParse(0);
+    }
+  );
 }
 
 logseq.ready(main).catch(console.error);

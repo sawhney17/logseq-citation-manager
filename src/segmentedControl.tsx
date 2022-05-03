@@ -12,19 +12,16 @@ const SegmentedControl = ({
 }) => {
   // console.log(defaultIndex)
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
-    console.log(activeIndex)
-    console.log(segments)
   const componentReady = useRef();
 
   // Determine when the component is "ready"
   useEffect(() => {
+    //@ts-expect-error
     componentReady.current = true;
   }, []);
 
   useEffect(() => {
     const activeSegmentRef = segments[activeIndex].ref;
-    console.log(activeSegmentRef);
-    console.log(activeSegmentRef.current);
     setTimeout(() => {
       const { offsetWidth, offsetLeft } = activeSegmentRef.current;
       const { style } = controlRef.current;
@@ -35,7 +32,6 @@ const SegmentedControl = ({
 
   const onInputChange = (value, index) => {
     setActiveIndex(index);
-    console.log(index);
     callback(value, index);
   };
 
