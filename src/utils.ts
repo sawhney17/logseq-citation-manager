@@ -52,7 +52,12 @@ const parseProperties = (type = '', citeKey = "", fields = {}, isPage: boolean) 
   }
   desiredProperties.forEach((property) => {
     if (fields[property]) {
-      newFields[property] = fields[property][0]
+      if (fields[property].length = 1) {
+        newFields[property] = fields[property][0]
+      }
+      else {
+        newFields[property] = fields[property]
+      }
     }
   })
   console.log(newFields)
@@ -121,7 +126,7 @@ const insertLiteratureNoteInline = async (note) => {
   if (currentBlock != null) {
     const newBlock = await logseq.Editor.insertBlock(currentBlock.uuid, parseTemplate(note.type, note.key, note.fields, false))
     if (parseTemplate(note.type, note.key, note.fields, false, true) != '') {
-      logseq.Editor.insertBlock(newBlock.uuid, parseTemplate(note.type, note.key, note.fields, false, true), {sibling:false})
+      logseq.Editor.insertBlock(newBlock.uuid, parseTemplate(note.type, note.key, note.fields, false, true), { sibling: false })
     }
 
   }
