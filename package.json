@@ -1,6 +1,7 @@
 {
-  "name": "logseq-plugin-template-react",
+  "name": "logseq-citation-manager",
   "version": "1.0.3",
+  "description": "Citation manager for logseq",
   "main": "dist/index.html",
   "scripts": {
     "dev": "vite",
@@ -42,7 +43,7 @@
     "windicss": "3.5.1"
   },
   "logseq": {
-    "id": "_pengx17-logseq-template-react",
+    "id": "logseq-citation-manager",
     "icon": "./logo.svg"
   }
 }
