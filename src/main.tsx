@@ -213,10 +213,10 @@ function main() {
   });
 
   logseq.App.registerCommand(
-    "insertLink",
+    "openAsPage",
     {
-      key: "inlineLitNote",
-      label: "Show Paperpile DB",
+      key: "openedLitNote",
+      label: "Search and open reference as page",
       keybinding: { binding: "mod+shift+o" },
     },
     () => {
@@ -224,9 +224,9 @@ function main() {
     }
   );
   logseq.App.registerCommand(
-    "openAsPage",
+    "insertLink",
     {
-      key: "openedLitNote",
+      key: "inlineLitNote",
       label: "Create Inline Link to Lit Note",
       keybinding: { binding: "mod+shift+l" },
     },
