@@ -1,3 +1,10 @@
+# 1.0.0 (2022-05-03)
+
+
+### Bug Fixes
+
+* **properties:** inline properties ([f1f65f0](https://github.com/sawhney17/logseq-citation-manager/commit/f1f65f00464a0ab10eaa43394cadf83c73f32b42))
+
 ## [2.1.1](https://github.com/pengx17/logseq-plugin-template-react/compare/v2.1.0...v2.1.1) (2022-03-24)
 
 
