@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/sawhney17/logseq-citation-manager/compare/v1.0.1...v1.0.2) (2022-05-03)
+
+
+### Bug Fixes
+
+* **format:** improve format ([8450a93](https://github.com/sawhney17/logseq-citation-manager/commit/8450a93d14b97453df8fea9dba53cb50d0e6ad95))
+
 ## [1.0.1](https://github.com/sawhney17/logseq-citation-manager/compare/v1.0.0...v1.0.1) (2022-05-03)
 
 
