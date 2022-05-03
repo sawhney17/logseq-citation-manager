@@ -112,6 +112,7 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed) => {
         let hello = highlightedRef.current + 1;
         setHighlightedResult(hello);
       } else {
+        setHighlightedResult(1);
         setHighlightedResult(0);
       }
       event.preventDefault()
@@ -122,6 +123,8 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed) => {
         setHighlightedResult(highlightedRef.current - 1);
       } else {
         setHighlightedResult(searchRef.current.length - 1);
+        setHighlightedResult(1);
+        setHighlightedResult(0);
       }
       event.preventDefault()
     }
