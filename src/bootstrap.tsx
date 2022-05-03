@@ -57,14 +57,14 @@ function main() {
     }
   `);
 
-  logseq.App.registerUIItem("toolbar", {
-    key: openIconName,
-    template: `
-      <a data-on-click="show"
-         class="${openIconName}"
-         style="opacity: .6; display: inline-flex;">⚙️</a>
-    `,
-  });
+  // logseq.App.registerUIItem("toolbar", {
+  //   key: openIconName,
+  //   template: `
+  //     <a data-on-click="show"
+  //        class="${openIconName}"
+  //        style="opacity: .6; display: inline-flex;">⚙️</a>
+  //   `,
+  // });
 }
 
 logseq.ready(main).catch(console.error);
