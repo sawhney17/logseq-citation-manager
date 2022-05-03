@@ -7,7 +7,6 @@ import App from "./App";
 
 import { logseq as PL } from "../package.json";
 
-// @ts-expect-error
 const css = (t, ...args) => String.raw(t, ...args);
 
 const pluginId = PL.id;
@@ -40,7 +39,6 @@ function main() {
   const openIconName = "template-plugin-open";
 
   if (isDev) {
-    // @ts-expect-error
     top[magicKey] = true;
   }
 
