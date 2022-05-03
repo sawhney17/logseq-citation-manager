@@ -1,6 +1,6 @@
 {
   "name": "logseq-plugin-template-react",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "dist/index.html",
   "scripts": {
     "dev": "vite",
