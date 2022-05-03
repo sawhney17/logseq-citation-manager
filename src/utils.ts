@@ -101,6 +101,7 @@ const createLiteratureNote = async (note, toRedirect) => {
 
 const navigateToLiteratureNote = (note) => {
   createLiteratureNote(note, true)
+  logseq.App.pushState('page', { name: note.key })
 }
 
 const insertLiteratureNoteReference = async (note) => {
