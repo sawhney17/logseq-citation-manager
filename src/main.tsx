@@ -213,7 +213,7 @@ function main() {
     {
       key: "inlineLitNote",
       label: "Show Paperpile DB",
-      keybinding: { binding: "mod+shift+l" },
+      keybinding: { binding: "mod+shift+o" },
     },
     () => {
       dispatchPaperpileParse(2);
@@ -224,7 +224,7 @@ function main() {
     {
       key: "openedLitNote",
       label: "Create Inline Link to Lit Note",
-      keybinding: { binding: "mod+shift+o" },
+      keybinding: { binding: "mod+shift+l" },
     },
     () => {
       dispatchPaperpileParse(1);
