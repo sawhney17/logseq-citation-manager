@@ -14,7 +14,7 @@ import MiniSearch from "minisearch";
 const css = (t, ...args) => String.raw(t, ...args);
 
 export var paperpile = "";
-export var paperpileParsed = []
+export var paperpileParsed = [];
 const pluginId = PL.id;
 const settings: SettingSchemaDesc[] = [
   {
@@ -60,7 +60,8 @@ const settings: SettingSchemaDesc[] = [
   {
     key: "pageFirstBlock",
     title: "First block of the page",
-    description: "Optional: Enter the first block of the page. This will mean that the following text will automatically be inserted with the properties. ",
+    description:
+      "Optional: Enter the first block of the page. This will mean that the following text will automatically be inserted with the properties. ",
     default: "",
     type: "string",
   },
@@ -104,21 +105,24 @@ const settings: SettingSchemaDesc[] = [
   {
     key: "inlineReferenceFirstBlock",
     title: "First block of the inline reference",
-    description: "Enter the first block of the inline reference. This will mean that the following text will automatically be inserted with the properties. You can use the placeholders {author}, {citekey}, {title}, {journal}, {year}, {volume}, {number}, {pages}, {doi}, {url}, {abstract} and {type}",
+    description:
+      "Enter the first block of the inline reference. This will mean that the following text will automatically be inserted with the properties. You can use the placeholders {author}, {citekey}, {title}, {journal}, {year}, {volume}, {number}, {pages}, {doi}, {url}, {abstract} and {type}",
     default: "",
     type: "string",
   },
   {
     key: "inlineReferenceSecondBlock",
     title: "Optional Second block of the inline reference",
-    description: "Enter the second block of the inline reference. This will mean that the following text will automatically be inserted after the first block. You can use the placeholders {author}, {citekey}, {title}, {journal}, {year}, {volume}, {number}, {pages}, {doi}, {url}, {abstract} and {type}",
+    description:
+      "Enter the second block of the inline reference. This will mean that the following text will automatically be inserted after the first block. You can use the placeholders {author}, {citekey}, {title}, {journal}, {year}, {volume}, {number}, {pages}, {doi}, {url}, {abstract} and {type}",
     default: "",
     type: "string",
   },
   {
     key: "indentSecondBlockofInlineReference",
     title: "Indent first block of inline reference?",
-    description: "Would you like to indent the second block of the inline reference?",
+    description:
+      "Would you like to indent the second block of the inline reference?",
     default: true,
     type: "boolean",
   },
@@ -142,8 +146,8 @@ const createDB = (mode) => {
     options
   ) as BibTeXParser.Bibliography;
 
-  paperpileParsed = parsed.entries
-  console.log(paperpileParsed)
+  paperpileParsed = parsed.entries;
+  console.log(paperpileParsed);
   dispatchPaperpileParse(mode);
 };
 
