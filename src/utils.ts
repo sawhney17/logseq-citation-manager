@@ -120,7 +120,7 @@ const insertLiteratureNoteInline = async (note) => {
   if (currentBlock != null) {
     const newBlock = await logseq.Editor.insertBlock(currentBlock.uuid, parseTemplate(note.type, note.key, note.fields, false))
     if (parseTemplate(note.type, note.key, note.fields, false, true) != '') {
-      logseq.Editor.insertBlock(newBlock.uuid, parseTemplate(note.type, note.key, note.fields, false, true))
+      logseq.Editor.insertBlock(newBlock.uuid, parseTemplate(note.type, note.key, note.fields, false, true), {sibling:false})
     }
 
   }
