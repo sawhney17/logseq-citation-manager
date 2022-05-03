@@ -61,6 +61,8 @@ const parseProperties = (type = '', citeKey = "", fields = {}, isPage: boolean) 
     }
   })
   console.log(newFields)
+  newFields['sourceTitle'] = newFields['title'];
+  delete newFields['title'];
   //Create a new page with the new fields
   return newFields
 }
