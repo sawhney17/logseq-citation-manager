@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/sawhney17/logseq-citation-manager/compare/v1.0.0...v1.0.1) (2022-05-03)
+
+
+### Bug Fixes
+
+* **inline:** insertion order issues ([740c6b8](https://github.com/sawhney17/logseq-citation-manager/commit/740c6b8dfb297eb055372c0157420e4ac5a3b7da))
+
 # 1.0.0 (2022-05-03)
 
 
