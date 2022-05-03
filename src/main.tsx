@@ -168,10 +168,20 @@ const showDB = (parsed, mode) => {
 
 const getPaperPile = async (mode) => {
   console.log(`file://${logseq.settings.paperpilePath}`);
-  axios.get(`file://${logseq.settings.paperpilePath}`).then((result) => {
-    paperpile = result.data;
-    createDB(mode);
-  });
+  axios
+    .get(`file://${logseq.settings.paperpilePath}`)
+    .then((result) => {
+      paperpile = result.data;
+      createDB(mode);
+    })
+    .catch((err) => {
+      logseq.App.showMsg("Whoops!, Something went wrong when fetching the citation DB. Please check the path and try again."); 
+      console.log(err)});
+
+  // axios.get('https://httpbin.org/status/200').
+  // // Will throw a TypeError because the property doesn't exist.
+  // then(res => console.log("res.doesNotExist.throwAnError")).
+  // catch(err => err);
 };
 logseq.useSettingsSchema(settings);
 function main() {
