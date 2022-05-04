@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/sawhney17/logseq-citation-manager/compare/v1.1.0...v1.2.0) (2022-05-04)
+
+
+### Features
+
+* **searchbar:** allow left click instead of enter ([59c8159](https://github.com/sawhney17/logseq-citation-manager/commit/59c8159069e199fca8c45cf5f66ffe083de441e9))
+
 # [1.1.0](https://github.com/sawhney17/logseq-citation-manager/compare/v1.0.3...v1.1.0) (2022-05-04)
 
 
