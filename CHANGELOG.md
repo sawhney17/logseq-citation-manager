@@ -1,3 +1,19 @@
+# [1.1.0](https://github.com/sawhney17/logseq-citation-manager/compare/v1.0.3...v1.1.0) (2022-05-04)
+
+
+### Bug Fixes
+
+* **CI:** remove pnpm lock ([f79bab3](https://github.com/sawhney17/logseq-citation-manager/commit/f79bab31437d5dea95b7c561c1d52f1c4d35bec8))
+* **metadata:** add final touches to the metadata ([edf677e](https://github.com/sawhney17/logseq-citation-manager/commit/edf677e2682216c6b7436be8ee779d11752f0071))
+* **toolbar:** remove toolbar icon ([16715af](https://github.com/sawhney17/logseq-citation-manager/commit/16715afabed10e9bde9fe1fba5bca28cf5aa6c86))
+* **toolbar:** Remove toolbar icon ([c27eea5](https://github.com/sawhney17/logseq-citation-manager/commit/c27eea5350bb54d615f6a29738ee447fda0a97ef))
+
+
+### Features
+
+* **metadata:** Properly Name the Plugin ([a97530b](https://github.com/sawhney17/logseq-citation-manager/commit/a97530b73d8ef970a4a8ff9787acc13f8d567457))
+* **ux:** Add error catching UX ([eb91b49](https://github.com/sawhney17/logseq-citation-manager/commit/eb91b49d755c035fdfde23cba48765dbabeee9d4))
+
 ## [1.0.3](https://github.com/sawhney17/logseq-citation-manager/compare/v1.0.2...v1.0.3) (2022-05-03)
 
 
