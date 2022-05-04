@@ -60,7 +60,9 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed) => {
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
   };
+  
   React.useEffect(() => {
+    
     let results;
     updateTemplates();
     if (searchTerm != "") {
@@ -106,6 +108,13 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed) => {
     updateHighlight();
     return () => document.removeEventListener("keydown", keyControl);
   }, [highlightedResult]);
+
+  const handleEnter = () => {
+    if (highlightedRef.current != null) {
+      let citationDetails = searchRef.current[highlightedRef.current];
+      actionRouter(currentModeRef.current, citationDetails)
+    }
+  }
   const keyControl = (event) => {
     if (event.keyCode === 40) {
       if (highlightedRef.current < searchRef.current.length - 1) {
@@ -130,10 +139,8 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed) => {
     }
     if (event.keyCode === 13) {
       //Enter
-      if (highlightedRef.current != null) {
-        let citationDetails = searchRef.current[highlightedRef.current];
-        actionRouter(currentModeRef.current, citationDetails)
-      }
+      handleEnter()
+      
       event.preventDefault()
     }
     event.handled = true;
@@ -171,6 +178,7 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed) => {
                 placeholder="Search for a Reference..."
                 value={searchTerm}
                 onChange={handleChange}
+                id="citationSearchbar"
               />
               <SegmentedControl
                 name="group-1"
@@ -202,21 +210,21 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed) => {
               {searchResults.map((item) => (
                 <div
                   id={item.key}
-                  onClick={insertBlocks}
+                  onClick={handleEnter}
                   className="hover:bg-[#4c4c4c] p-2 rounded-lg flex flex-auto"
                 >
                   <div className=" max-w-4">
                     <div
                       title="template"
                       className="text-xs rounded border mr-2 px-1 w-5"
-                      onClick={insertBlocks}
+                      onClick={handleEnter}
                     >
                       C
                     </div>
                   </div>
                   <li
                     className="inline-block px-2 searchItem"
-                    onClick={insertBlocks}
+                    onClick={handleEnter}
                   >
                     {item.fields.title[0]}
                   </li>
