@@ -56,10 +56,10 @@ const settings: SettingSchemaDesc[] = [
     ],
   },
   {
-    key: "pageFirstBlock",
-    title: "First block of the page",
+    key: "customPageContent",
+    title: "Custom Page Content to be inserted by default to the first block ",
     description:
-      "Optional: Enter the first block of the page. This will mean that the following text will automatically be inserted with the properties. ",
+      "Type the properties you want to be added by default to the first block of the page, use \\n to create a newline, you can use {author}, {title}, {journal}, {year}, {volume}, {number}, {pages}, {doi}, {url} in the value section",
     default: "",
     type: "string",
   },
@@ -145,7 +145,6 @@ const createDB = (mode) => {
   ) as BibTeXParser.Bibliography;
 
   paperpileParsed = parsed.entries;
-  console.log(paperpileParsed);
   dispatchPaperpileParse(mode);
 };
 
@@ -253,6 +252,15 @@ function main() {
       dispatchPaperpileParse(0);
     }
   );
+  logseq.Editor.registerSlashCommand("Create Inline Literature Note", async() => {
+    dispatchPaperpileParse(0);
+  });
+  logseq.Editor.registerSlashCommand("Create Inline Link to Lit Note", async() => {
+    dispatchPaperpileParse(1);
+  });
+  logseq.Editor.registerSlashCommand("Search and open reference as page", async() => {
+    dispatchPaperpileParse(2);
+  });
 }
 
 logseq.ready(main).catch(console.error);
