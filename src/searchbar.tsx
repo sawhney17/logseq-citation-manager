@@ -36,9 +36,6 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed) => {
     searchRef.current = data;
     setSearchRef(data);
   };
-  function getSearchResults() {
-    return searchResults;
-  }
   function updateTemplates() {
     setSmartblocks(
       paperpileParsed.paperpileParsed.parse.map((item) => {
@@ -145,9 +142,7 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed) => {
     }
     event.handled = true;
   };
-  const insertBlocks = (e) => {
-    // insertProperlyTemplatedBlock(blockID, e.target.id, "true");
-  };
+  
   const updateHighlight = () => {
     for (const x in searchRef.current) {
       if (x == highlightedResult) {
