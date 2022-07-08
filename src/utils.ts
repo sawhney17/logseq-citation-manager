@@ -43,7 +43,6 @@ export const useSidebarVisible = () => {
 
 const parseTemplate = (type = "", citeKey = "", fields = {}, text) => {
   let template = text;
-  console.log(fields);
   template = template.replaceAll("{citekey}", citeKey);
   template = template.replaceAll("{type}", type);
   template = template.replaceAll("{type}", type);
@@ -69,7 +68,6 @@ const parseTemplate = (type = "", citeKey = "", fields = {}, text) => {
     }
   }
   template = template.replaceAll(/{.*}/g, "");
-  console.log(template);
   return template;
 };
 const createLiteratureNote = async (
@@ -92,8 +90,6 @@ const createLiteratureNote = async (
       { redirect: isNoteReference }
     ).then((page) => {
       logseq.Editor.getPageBlocksTree(page.name).then((block2) => {
-        console.log(block2);
-        console.log("block2");
         logseq.Editor.insertBatchBlock(block2[0].uuid, blocks).then(() => {
           logseq.Editor.removeBlock(block2[0].uuid);
         });
@@ -101,10 +97,7 @@ const createLiteratureNote = async (
     });
   }
 
-  console.log(typeof(originalContent))
-  console.log(uuid)
   if (!isNoteReference) {
-    console.log("reference")
     const currentBlock = await logseq.Editor.getCurrentBlock();
 
     if (currentBlock != null) {
@@ -116,12 +109,10 @@ const createLiteratureNote = async (
       logseq.App.showMsg(
         "Oops, looks like this wasn't called from inside a block. Please try again!"
       );
-      console.log("elsesdfdfd")
       logseq.Editor.updateBlock(uuid, `${originalContent}`);
     }
   } else {
     logseq.App.pushState("page", { name: pageTitle });
-    console.log("elseing")
     logseq.Editor.updateBlock(uuid, `${originalContent}`);
   }
 };
@@ -129,9 +120,6 @@ const createLiteratureNote = async (
 const insertLiteratureNoteInline = async (note, uuid) => {
   const currentBlock = await logseq.Editor.getBlock(uuid);
   const blocks = await parseTemplateBlock(note.type, note.key, note.fields);
-  console.log(blocks);
-  // setTimeout(async() => {
-
   if (currentBlock != null) {
     await logseq.Editor.insertBatchBlock(currentBlock.uuid, blocks, {
       sibling: true,
@@ -148,7 +136,6 @@ export const actionRouter = (
   oc = undefined
 ) => {
   if (actionKey == "inline" || actionKey == 0) {
-    console.log(uuid);
     insertLiteratureNoteInline(note, uuid);
     if (uuid != undefined && oc != undefined) {
       console.log("conetnt reset");
@@ -179,7 +166,6 @@ const parseTemplatePage = async (type2, citekey2, filters2) => {
   data.forEach((item) => {
     triggerParse(item);
   });
-  console.log(data);
   return data;
 };
 

@@ -86,20 +86,26 @@ const settings: SettingSchemaDesc[] = [
 ];
 
 const dispatchPaperpileParse = async (mode, uuid) => {
+  const start = performance.now(); // returns something like 138.899999998509884, which means 138.9 milliseconds passed
+  if ((await logseq.FileStorage.hasItem("paperpileDB.json")) == true) {
+    paperpileParsed = JSON.parse(await logseq.FileStorage.getItem("paperpileDB.json"));
+    const duration = performance.now() - start;
+    console.log("nowjd" + duration);
+  }
   const block = await logseq.Editor.getBlock(uuid);
-  if (paperpile === "") {
-    getPaperPile(mode, uuid);
+  console.log(paperpileParsed)
+  console.log([])
+  console.log()
+  if (paperpileParsed.length == 0) {
+    logseq.UI.showMsg("No existing DB could be found, reloading DB...");
+    getPaperPile();
   } else {
     logseq.Editor.updateBlock(uuid, `inserting...`);
-    // cachedOperations.push({
-    //   uuid: uuid,
-    //   originalContent: block.content,
-    // });
-    // console.log(cachedOperations)
     showDB(paperpileParsed, mode, uuid, block.content);
   }
 };
-const createDB = (mode, uuid) => {
+const createDB = () => {
+  const start = performance.now(); // returns something like 138.899999998509884, which means 138.9 milliseconds passed
   const options: BibTeXParser.ParserOptions = {
     errorHandler: (err) => {
       console.warn("Citation plugin: error loading BibLaTeX entry:", err);
@@ -111,21 +117,26 @@ const createDB = (mode, uuid) => {
   ) as BibTeXParser.Bibliography;
 
   paperpileParsed = parsed.entries;
-  dispatchPaperpileParse(mode, uuid);
+  logseq.FileStorage.setItem("paperpileDB.json", JSON.stringify(paperpileParsed));
+  const duration = performance.now() - start;
+  console.log("create " + duration);
 };
 
 const showDB = (parsed, mode, uuid, oc) => {
   paperpileParsed = parsed;
-  console.log("mode is ", mode);
 
-  uuidOriginals = uuid
-  originalContentC = oc
+  uuidOriginals = uuid;
+  originalContentC = oc;
   ReactDOM.unmountComponentAtNode(document.getElementById("app"));
-  console.log(uuid)
   ReactDOM.render(
     <React.StrictMode>
       <SearchBar
-        paperpileParsed={{ parse: paperpileParsed, currentModeInput: mode, currentUuid: uuid, originalContent: oc}}
+        paperpileParsed={{
+          parse: paperpileParsed,
+          currentModeInput: mode,
+          currentUuid: uuid,
+          originalContent: oc,
+        }}
       />
     </React.StrictMode>,
     document.getElementById("app")
@@ -134,13 +145,16 @@ const showDB = (parsed, mode, uuid, oc) => {
   handleClosePopup();
 };
 
-const getPaperPile = async (mode, uuid) => {
+const getPaperPile = async () => {
+  const start = performance.now(); // returns something like 138.899999998509884, which means 138.9 milliseconds passed
+  // ...
+
   console.log(`file://${logseq.settings.paperpilePath}`);
   axios
     .get(`file://${logseq.settings.paperpilePath}`)
     .then((result) => {
       paperpile = result.data;
-      createDB(mode, uuid);
+      createDB();
     })
     .catch((err) => {
       logseq.App.showMsg(
@@ -153,6 +167,8 @@ const getPaperPile = async (mode, uuid) => {
   // // Will throw a TypeError because the property doesn't exist.
   // then(res => console.log("res.doesNotExist.throwAnError")).
   // catch(err => err);
+  const duration = performance.now() - start;
+  console.log("get " + duration);
 };
 logseq.useSettingsSchema(settings);
 function main() {
@@ -161,7 +177,7 @@ function main() {
   logseq.setMainUIInlineStyle({
     zIndex: 11,
   });
-  logseq.setMainUIAttrs({focus: true})
+  logseq.setMainUIAttrs({ focus: true });
 
   logseq.App.registerCommand(
     "openAsPage",
@@ -194,6 +210,15 @@ function main() {
     },
     (e) => {
       dispatchPaperpileParse(0, e.uuid);
+    }
+  );
+  logseq.App.registerCommandPalette(
+    {
+      key: "ReIndex Citations DB",
+      label: "Reindex the citation DB in case you made changes to your .bib files",
+    },
+    (e) => {
+      getPaperPile();
     }
   );
   logseq.Editor.registerSlashCommand(

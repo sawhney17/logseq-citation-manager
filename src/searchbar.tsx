@@ -120,12 +120,8 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
 
   const handleEnter = (index = null) => {
     const resultKey = index == null ? highlightedResult : index;
-    console.log("console.log(resultKey)");
-    console.log(resultKey);
     if (resultKey != null) {
       let citationDetails = searchRef.current[resultKey];
-      console.log(paperpileParsed);
-      console.log("paperpileParsed");
       const uuidCurrent = paperpileParsed.paperpileParsed.currentUuid;
       const ocCurrent = paperpileParsed.paperpileParsed.originalContent;
       actionRouter(
