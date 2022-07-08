@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/sawhney17/logseq-citation-manager/compare/v1.2.0...v1.3.0) (2022-07-08)
+
+
+### Features
+
+* **everything:** semi-initial-commit ([684c3da](https://github.com/sawhney17/logseq-citation-manager/commit/684c3da1de5cde3e0b33362fc4ea0efe4c0f456d))
+
 # [1.2.0](https://github.com/sawhney17/logseq-citation-manager/compare/v1.1.0...v1.2.0) (2022-05-04)
 
 
