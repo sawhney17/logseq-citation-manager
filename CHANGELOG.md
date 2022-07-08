@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/sawhney17/logseq-citation-manager/compare/v1.4.1...v1.4.2) (2022-07-08)
+
+
+### Bug Fixes
+
+* **calling:** accidental popups ([1a8c5fd](https://github.com/sawhney17/logseq-citation-manager/commit/1a8c5fd99afc4541353d42f0be479b632067ba9b))
+
 ## [1.4.1](https://github.com/sawhney17/logseq-citation-manager/compare/v1.4.0...v1.4.1) (2022-07-08)
 
 
