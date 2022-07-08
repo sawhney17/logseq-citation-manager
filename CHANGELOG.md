@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/sawhney17/logseq-citation-manager/compare/v1.5.1...v1.5.2) (2022-07-08)
+
+
+### Bug Fixes
+
+* **version:** increase version ([9e71215](https://github.com/sawhney17/logseq-citation-manager/commit/9e71215f23c25303ffcc0289dddfa6f7e5a68f84))
+
 ## [1.5.1](https://github.com/sawhney17/logseq-citation-manager/compare/v1.5.0...v1.5.1) (2022-07-08)
 
 
