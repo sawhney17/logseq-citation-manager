@@ -73,20 +73,23 @@ const parseTemplate = (type = "", citeKey = "", fields = {}, text) => {
   return template;
 };
 const createLiteratureNote = async (note, isNoteReference) => {
+  const pageTitle = parseTemplate(
+    note.type,
+    note.key,
+    note.fields,
+    logseq.settings.pageTitle
+  )
   if ((await logseq.Editor.getPage(note.key)) == null) {
     const blocks = await parseTemplatePage(note.type, note.key, note.fields);
     logseq.Editor.createPage(
-      parseTemplate(
-        note.type,
-        note.key,
-        note.fields,
-        logseq.settings.pageTitle
-      ),
-      {},
+      pageTitle,
+      {fun: "block"},
       { redirect: isNoteReference }
     ).then((page) => {
       logseq.Editor.getPageBlocksTree(page.name).then((block2) => {
-        logseq.Editor.insertBatchBlock(block2[0].uuid, blocks).then(() => {
+        console.log(block2);
+        console.log("block2");
+        logseq.Editor.insertBatchBlock(block2[0].uuid, blocks,).then(() => {
           logseq.Editor.removeBlock(block2[0].uuid);
         });
       });
@@ -96,7 +99,7 @@ const createLiteratureNote = async (note, isNoteReference) => {
     const currentBlock = await logseq.Editor.getCurrentBlock();
 
     if (currentBlock != null) {
-      logseq.Editor.insertBlock(currentBlock.uuid, `[[${note.key}]]`);
+      logseq.Editor.updateBlock(currentBlock.uuid, `${currentBlock.content} [[${pageTitle}]]`);
     } else {
       logseq.App.showMsg(
         "Oops, looks like this wasn't called from inside a block. Please try again!"
@@ -119,6 +122,8 @@ const insertLiteratureNoteInline = async (note, uuid) => {
   }
 };
 // , 1000);};
+//Dispatch document keydown event for teh tab key
+
 
 export const actionRouter = (actionKey: any, note, uuid = undefined, oc  = undefined) => {
   if (actionKey == "inline" || actionKey == 0) {

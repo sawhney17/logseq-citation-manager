@@ -21,7 +21,6 @@ interface cachedBlock {
 
 export var cachedOperations: cachedBlock[] = [];
 export const performCachedOperations = () => {
-  console.log("cache cleared")
   cachedOperations = cachedOperations.reverse()
   cachedOperations.forEach((operation) => {
     if (operation.uuid) {
