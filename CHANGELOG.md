@@ -1,3 +1,15 @@
+# [1.4.0](https://github.com/sawhney17/logseq-citation-manager/compare/v1.3.0...v1.4.0) (2022-07-08)
+
+
+### Bug Fixes
+
+* **ci:** make it functional ([bb2b161](https://github.com/sawhney17/logseq-citation-manager/commit/bb2b1610b3fae0840b726f67892a94d89194dafd))
+
+
+### Features
+
+* **inline:** functional inline performance ([500d464](https://github.com/sawhney17/logseq-citation-manager/commit/500d464a86a54a9cfbf08594da5af5e68cd74ce1))
+
 # [1.3.0](https://github.com/sawhney17/logseq-citation-manager/compare/v1.2.0...v1.3.0) (2022-07-08)
 
 
