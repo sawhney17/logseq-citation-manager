@@ -10,7 +10,6 @@ const SegmentedControl = ({
   defaultIndex,
   controlRef,
 }) => {
-  // console.log(defaultIndex)
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
   const componentReady = useRef();
 
