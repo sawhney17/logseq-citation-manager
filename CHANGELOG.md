@@ -1,3 +1,11 @@
+## [1.5.1](https://github.com/sawhney17/logseq-citation-manager/compare/v1.5.0...v1.5.1) (2022-07-08)
+
+
+### Performance Improvements
+
+* **large-graphs:** implement local caching ([70706db](https://github.com/sawhney17/logseq-citation-manager/commit/70706db369fa3330a380b5194e2d1398f27ae758))
+* **large-graphs:** initial support for large graf ([7bee75b](https://github.com/sawhney17/logseq-citation-manager/commit/7bee75b7c1be89d3cfc07be4cf7c5f551b76b46b))
+
 # [1.5.0](https://github.com/sawhney17/logseq-citation-manager/compare/v1.4.2...v1.5.0) (2022-07-08)
 
 
