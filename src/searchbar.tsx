@@ -107,8 +107,11 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
   }, [highlightedResult]);
 
   const handleEnter = (index = null) => {
-    if (highlightedRef.current != null) {
-      let citationDetails = searchRef.current[highlightedRef.current];
+    const resultKey = index == null ? highlightedResult : index;
+    console.log("console.log(resultKey)")
+    console.log(resultKey)
+    if (resultKey != null) {
+      let citationDetails = searchRef.current[resultKey];
       console.log(paperpileParsed)
       console.log("paperpileParsed")
       const uuidCurrent = paperpileParsed.paperpileParsed.currentUuid;

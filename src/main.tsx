@@ -19,16 +19,16 @@ interface cachedBlock {
   originalContent: string;
 }
 
-export var cachedOperations: cachedBlock[] = [];
-export const performCachedOperations = () => {
-  cachedOperations = cachedOperations.reverse()
-  cachedOperations.forEach((operation) => {
-    if (operation.uuid) {
-      logseq.Editor.updateBlock(operation.uuid, operation.originalContent);
-    }
-  });
-  cachedOperations = [];
-};
+// export var cachedOperations: cachedBlock[] = [];
+// export const performCachedOperations = () => {
+//   cachedOperations = cachedOperations.reverse()
+//   cachedOperations.forEach((operation) => {
+//     if (operation.uuid) {
+//       logseq.Editor.updateBlock(operation.uuid, operation.originalContent);
+//     }
+//   });
+//   cachedOperations = [];
+// };
 export var paperpile = "";
 export var paperpileParsed = [];
 const pluginId = PL.id;
@@ -88,11 +88,11 @@ const dispatchPaperpileParse = async (mode, uuid) => {
     getPaperPile(mode, uuid);
   } else {
     logseq.Editor.updateBlock(uuid, `inserting...`);
-    cachedOperations.push({
-      uuid: uuid,
-      originalContent: block.content,
-    });
-    console.log(cachedOperations)
+    // cachedOperations.push({
+    //   uuid: uuid,
+    //   originalContent: block.content,
+    // });
+    // console.log(cachedOperations)
     showDB(paperpileParsed, mode, uuid, block.content);
   }
 };

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useMountedState } from "react-use";
 // import * as BibTeXParser from "@retorquere/bibtex-parser";
 import { BlockEntity, PageIdentity } from "@logseq/libs/dist/LSPlugin.user";
-import { cachedOperations, performCachedOperations } from "./main";
+// import { cachedOperations, performCachedOperations } from "./main";
 
 const reg = /{.*}/g;
 var data = null;
@@ -72,41 +72,58 @@ const parseTemplate = (type = "", citeKey = "", fields = {}, text) => {
   console.log(template);
   return template;
 };
-const createLiteratureNote = async (note, isNoteReference) => {
+const createLiteratureNote = async (
+  note,
+  isNoteReference,
+  originalContent,
+  uuid
+) => {
   const pageTitle = parseTemplate(
     note.type,
     note.key,
     note.fields,
     logseq.settings.pageTitle
-  )
-  if ((await logseq.Editor.getPage(note.key)) == null) {
+  );
+  if ((await logseq.Editor.getPage(pageTitle)) == null) {
     const blocks = await parseTemplatePage(note.type, note.key, note.fields);
     logseq.Editor.createPage(
       pageTitle,
-      {fun: "block"},
+      { fun: "block" },
       { redirect: isNoteReference }
     ).then((page) => {
       logseq.Editor.getPageBlocksTree(page.name).then((block2) => {
         console.log(block2);
         console.log("block2");
-        logseq.Editor.insertBatchBlock(block2[0].uuid, blocks,).then(() => {
+        logseq.Editor.insertBatchBlock(block2[0].uuid, blocks).then(() => {
           logseq.Editor.removeBlock(block2[0].uuid);
         });
       });
     });
   }
+
+  console.log(typeof(originalContent))
+  console.log(uuid)
   if (!isNoteReference) {
+    console.log("reference")
     const currentBlock = await logseq.Editor.getCurrentBlock();
 
     if (currentBlock != null) {
-      logseq.Editor.updateBlock(currentBlock.uuid, `${currentBlock.content} [[${pageTitle}]]`);
+      logseq.Editor.updateBlock(
+        currentBlock.uuid,
+        `${originalContent}[[${pageTitle}]]`
+      );
     } else {
       logseq.App.showMsg(
         "Oops, looks like this wasn't called from inside a block. Please try again!"
       );
+      console.log("elsesdfdfd")
+      logseq.Editor.updateBlock(uuid, `${originalContent}`);
     }
+  } else {
+    logseq.App.pushState("page", { name: pageTitle });
+    console.log("elseing")
+    logseq.Editor.updateBlock(uuid, `${originalContent}`);
   }
-  performCachedOperations();
 };
 
 const insertLiteratureNoteInline = async (note, uuid) => {
@@ -124,26 +141,31 @@ const insertLiteratureNoteInline = async (note, uuid) => {
 // , 1000);};
 //Dispatch document keydown event for teh tab key
 
-
-export const actionRouter = (actionKey: any, note, uuid = undefined, oc  = undefined) => {
+export const actionRouter = (
+  actionKey: any,
+  note,
+  uuid = undefined,
+  oc = undefined
+) => {
   if (actionKey == "inline" || actionKey == 0) {
     console.log(uuid);
     insertLiteratureNoteInline(note, uuid);
+    if (uuid != undefined && oc != undefined) {
+      console.log("conetnt reset");
+      logseq.Editor.updateBlock(uuid, oc);
+    }
   }
+
   if (actionKey == "goToReference" || actionKey == 1) {
-    createLiteratureNote(note, true);
+    console.log("go to reference");
+    createLiteratureNote(note, true, oc, uuid);
   }
   if (actionKey == "insertLink" || actionKey == 2) {
-    createLiteratureNote(note, false);
+    console.log("insert link");
+    createLiteratureNote(note, false, oc, uuid);
   }
   logseq.hideMainUI();
   //provided uuid and Oc is not null, update block
-  console.log(uuid)
-  console.log(oc)
-  console.log("oc")
-  if (uuid != undefined && oc != undefined) {
-    logseq.Editor.updateBlock(uuid, oc);
-  }
 };
 
 const parseTemplatePage = async (type2, citekey2, filters2) => {
