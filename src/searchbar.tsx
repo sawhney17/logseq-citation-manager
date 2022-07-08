@@ -48,23 +48,24 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
   };
   function updateTemplates() {
     setSmartblocks(
-      paperpileParsed.paperpileParsed.parse.map((item) => {
-        try {
-          let pair;
-          if (logseq.settings.indexAbstract) {
-            pair = {
-              title: item.fields.title[0],
-              abstract: item.fields.abstract,
-            };
-          } else {
-            pair = {
-              title: item.fields.title[0],
-            };
-          }
-          return { ...pair, ...item };
-        } catch (e) {
-        }
-      }).filter( Boolean )
+      paperpileParsed.paperpileParsed.parse
+        .map((item) => {
+          try {
+            let pair;
+            if (logseq.settings.indexAbstract) {
+              pair = {
+                title: item.fields.title[0],
+                abstract: item.fields.abstract,
+              };
+            } else {
+              pair = {
+                title: item.fields.title[0],
+              };
+            }
+            return { ...pair, ...item };
+          } catch (e) {}
+        })
+        .filter(Boolean)
     );
   }
   const handleChange = (event) => {
