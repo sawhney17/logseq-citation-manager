@@ -1,8 +1,8 @@
-# Logseq Plugin Template React
+# Logseq Citations Plugin
 
+## Installation
+- This plugin can be installed from the Logseq marketplace
 ## Features
-
-- plug & play boilerplate with properly defined GitHub action defaults
-- develop with HMR, empowered by lightning fast Vite ⚡ with [vite-logseq-plugin](https://github.com/pengx17/vite-plugin-logseq)
-- windicss for styling
-- pnpm
+- Supports customisable page and block templates
+- Supports embedding and linking to Bibtex items in the form of pages *and* links
+- Supports Zotero, Paperpile and other applications with support for 
