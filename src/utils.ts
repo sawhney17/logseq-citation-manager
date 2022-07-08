@@ -50,10 +50,12 @@ const parseTemplate = (type = "", citeKey = "", fields = {}, text) => {
   try {
     template = template.replaceAll(
       /{author\s*lastname}/g,
+      // @ts-ignore-error
       fields.author[0].split(",")[0]
     );
     template = template.replaceAll(
       /{author\s*firstname}/g,
+      // @ts-ignore-error
       fields.author[0].split(",")[1]
     );
   } catch (error) {
