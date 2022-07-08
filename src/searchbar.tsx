@@ -16,20 +16,20 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
   const [highlightedResult, setHighlightedRef] = React.useState(null);
   const [smartblocks, setSmartblocks] = React.useState([]);
   const firstUpdate = useRef(true);
-  const [currentMode, setCurrentMode] = useState(paperpileParsed.paperpileParsed.currentModeInput);
+  const [currentMode, setCurrentMode] = useState(
+    paperpileParsed.paperpileParsed.currentModeInput
+  );
   //on render focus on the input citationSearchbar
   React.useEffect(() => {
     setTimeout(() => {
-
-    const input = document.getElementById("citationSearchbar");
-    if (input) {
-      input.focus();
-    }
+      const input = document.getElementById("citationSearchbar");
+      if (input) {
+        input.focus();
+      }
     }, 100);
   }, []);
   const currentModeRef = useRef(currentMode);
 
-  
   const setCurrentModeRef = (mode: string) => {
     currentModeRef.current = mode;
     setCurrentMode(mode);
@@ -49,34 +49,36 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
   function updateTemplates() {
     setSmartblocks(
       paperpileParsed.paperpileParsed.parse.map((item) => {
-        let pair;
-        if (logseq.settings.indexAbstract) {
-          pair = {
-            title: item.fields.title[0],
-            abstract: item.fields.abstract,
-          };
-        } else {
-          pair = {
-            title: item.fields.title[0],
-          };
+        try {
+          let pair;
+          if (logseq.settings.indexAbstract) {
+            pair = {
+              title: item.fields.title[0],
+              abstract: item.fields.abstract,
+            };
+          } else {
+            pair = {
+              title: item.fields.title[0],
+            };
+          }
+          return { ...pair, ...item };
+        } catch (e) {
         }
-        return { ...pair, ...item };
-      })
+      }).filter( Boolean )
     );
   }
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
   };
-  
+
   React.useEffect(() => {
-    
     let results;
     updateTemplates();
     if (searchTerm != "") {
       if (!logseq.settings.smartsearch) {
         results = smartblocks.filter((template) => {
           if (template.fields.title[0] != undefined) {
-          return template.fields.title[0].toLowerCase().includes(searchTerm);
+            return template.fields.title[0].toLowerCase().includes(searchTerm);
           }
         });
       } else {
@@ -118,17 +120,22 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
 
   const handleEnter = (index = null) => {
     const resultKey = index == null ? highlightedResult : index;
-    console.log("console.log(resultKey)")
-    console.log(resultKey)
+    console.log("console.log(resultKey)");
+    console.log(resultKey);
     if (resultKey != null) {
       let citationDetails = searchRef.current[resultKey];
-      console.log(paperpileParsed)
-      console.log("paperpileParsed")
+      console.log(paperpileParsed);
+      console.log("paperpileParsed");
       const uuidCurrent = paperpileParsed.paperpileParsed.currentUuid;
       const ocCurrent = paperpileParsed.paperpileParsed.originalContent;
-      actionRouter(currentModeRef.current, citationDetails, uuidCurrent, ocCurrent)
+      actionRouter(
+        currentModeRef.current,
+        citationDetails,
+        uuidCurrent,
+        ocCurrent
+      );
     }
-  }
+  };
   const keyControl = (event) => {
     if (event.keyCode === 40) {
       if (highlightedRef.current < searchRef.current.length - 1) {
@@ -138,7 +145,7 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
         setHighlightedResult(1);
         setHighlightedResult(0);
       }
-      event.preventDefault()
+      event.preventDefault();
     }
     if (event.keyCode === 38) {
       //Up arrow
@@ -149,13 +156,13 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
         setHighlightedResult(1);
         setHighlightedResult(0);
       }
-      event.preventDefault()
+      event.preventDefault();
     }
     if (event.keyCode === 13) {
       //Enter
-      handleEnter()
-      
-      event.preventDefault()
+      handleEnter();
+
+      event.preventDefault();
     }
     event.handled = true;
   };
@@ -166,10 +173,8 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
         document
           .getElementById(searchRef.current[x].key)
           .classList.add("bg-[#4c4c4c]");
-        var element = document
-          .getElementById(searchRef.current[x].key)
+        var element = document.getElementById(searchRef.current[x].key);
         // document.getElementById('citationScrollableDiv').scrollTop = element.offsetTop - 3*element.offsetHeight;
-
       } else {
         document
           .getElementById(searchRef.current[x].key)
@@ -222,21 +227,27 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
               {searchResults.map((item, index) => (
                 <div
                   id={item.key}
-                  onClick={()=>{handleEnter(index)}}
+                  onClick={() => {
+                    handleEnter(index);
+                  }}
                   className="hover:bg-[#4c4c4c] p-2 rounded-lg flex flex-auto"
                 >
                   <div className=" max-w-4">
                     <div
                       title="template"
                       className="text-xs rounded border mr-2 px-1 w-5"
-                      onClick={()=>{handleEnter(index)}}
+                      onClick={() => {
+                        handleEnter(index);
+                      }}
                     >
                       C
                     </div>
                   </div>
                   <li
                     className="inline-block px-2 searchItem"
-                    onClick={()=>{handleEnter(index)}}
+                    onClick={() => {
+                      handleEnter(index);
+                    }}
                   >
                     {item.fields.title[0]}
                   </li>
