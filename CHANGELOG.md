@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/sawhney17/logseq-citation-manager/compare/v1.4.2...v1.5.0) (2022-07-08)
+
+
+### Features
+
+* **searchbar:** enter edit mode by default ([b6536f7](https://github.com/sawhney17/logseq-citation-manager/commit/b6536f7aa3020d4e8e30bb8ac1836e43bacf4936))
+
 ## [1.4.2](https://github.com/sawhney17/logseq-citation-manager/compare/v1.4.1...v1.4.2) (2022-07-08)
 
 
