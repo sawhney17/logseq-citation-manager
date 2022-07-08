@@ -21,17 +21,6 @@ interface cachedBlock {
 
 export var uuidOriginals = "";
 export var originalContentC = "";
-
-// export var cachedOperations: cachedBlock[] = [];
-// export const performCachedOperations = () => {
-//   cachedOperations = cachedOperations.reverse()
-//   cachedOperations.forEach((operation) => {
-//     if (operation.uuid) {
-//       logseq.Editor.updateBlock(operation.uuid, operation.originalContent);
-//     }
-//   });
-//   cachedOperations = [];
-// };
 export var paperpile = "";
 export var paperpileParsed = [];
 const pluginId = PL.id;
@@ -83,19 +72,29 @@ const settings: SettingSchemaDesc[] = [
     default: "{citekey}",
     type: "string",
   },
+  {
+    key: "reindexOnStartup",
+    title: "Reindex on startup?",
+    description:
+      " Would you like to reindex the DB on startup? This would mean that the search results stay up to date throughuot but would mean lag on the first search after you restart logseq. Recommended with DBs that have less than 1000 references. You can force reindex through the command pallete",
+    default: true,
+    type: "boolean",
+  },
 ];
 
 const dispatchPaperpileParse = async (mode, uuid) => {
   const start = performance.now(); // returns something like 138.899999998509884, which means 138.9 milliseconds passed
-  if ((await logseq.FileStorage.hasItem("paperpileDB.json")) == true) {
-    paperpileParsed = JSON.parse(await logseq.FileStorage.getItem("paperpileDB.json"));
-    const duration = performance.now() - start;
-    console.log("nowjd" + duration);
+
+  if (!logseq.settings.reindexOnStartup) {
+    if ((await logseq.FileStorage.hasItem("paperpileDB.json")) == true) {
+      paperpileParsed = JSON.parse(
+        await logseq.FileStorage.getItem("paperpileDB.json")
+      );
+      const duration = performance.now() - start;
+      console.log("nowjd" + duration);
+    }
   }
   const block = await logseq.Editor.getBlock(uuid);
-  console.log(paperpileParsed)
-  console.log([])
-  console.log()
   if (paperpileParsed.length == 0) {
     logseq.UI.showMsg("No existing DB could be found, reloading DB...");
     getPaperPile();
@@ -117,7 +116,10 @@ const createDB = () => {
   ) as BibTeXParser.Bibliography;
 
   paperpileParsed = parsed.entries;
-  logseq.FileStorage.setItem("paperpileDB.json", JSON.stringify(paperpileParsed));
+  logseq.FileStorage.setItem(
+    "paperpileDB.json",
+    JSON.stringify(paperpileParsed)
+  );
   const duration = performance.now() - start;
   console.log("create " + duration);
 };
@@ -172,12 +174,9 @@ const getPaperPile = async () => {
 };
 logseq.useSettingsSchema(settings);
 function main() {
-  console.info(`#${pluginId}: MAIN`);
-
   logseq.setMainUIInlineStyle({
     zIndex: 11,
   });
-  logseq.setMainUIAttrs({ focus: true });
 
   logseq.App.registerCommand(
     "openAsPage",
@@ -215,7 +214,8 @@ function main() {
   logseq.App.registerCommandPalette(
     {
       key: "ReIndex Citations DB",
-      label: "Reindex the citation DB in case you made changes to your .bib files",
+      label:
+        "Reindex the citation DB in case you made changes to your .bib files",
     },
     (e) => {
       getPaperPile();
