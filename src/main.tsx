@@ -157,18 +157,11 @@ const getPaperPile = async (mode, uuid) => {
 logseq.useSettingsSchema(settings);
 function main() {
   console.info(`#${pluginId}: MAIN`);
-  function createModel() {
-    return {
-      // show() {
-      //   dispatchPaperpileParse(0, uuid);
-      // },
-    };
-  }
 
-  logseq.provideModel(createModel());
   logseq.setMainUIInlineStyle({
     zIndex: 11,
   });
+  logseq.setMainUIAttrs({focus: true})
 
   logseq.App.registerCommand(
     "openAsPage",

@@ -17,9 +17,19 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
   const [smartblocks, setSmartblocks] = React.useState([]);
   const firstUpdate = useRef(true);
   const [currentMode, setCurrentMode] = useState(paperpileParsed.paperpileParsed.currentModeInput);
+  //on render focus on the input citationSearchbar
+  React.useEffect(() => {
+    setTimeout(() => {
 
+    const input = document.getElementById("citationSearchbar");
+    if (input) {
+      input.focus();
+    }
+    }, 100);
+  }, []);
   const currentModeRef = useRef(currentMode);
 
+  
   const setCurrentModeRef = (mode: string) => {
     currentModeRef.current = mode;
     setCurrentMode(mode);
