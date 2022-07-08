@@ -5,12 +5,31 @@ import React from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
 import { logseq as PL } from "../package.json";
-import { SettingSchemaDesc } from "@logseq/libs/dist/LSPlugin.user";
+import {
+  BlockIdentity,
+  SettingSchemaDesc,
+} from "@logseq/libs/dist/LSPlugin.user";
 import * as BibTeXParser from "@retorquere/bibtex-parser";
 import SearchBar from "./searchbar";
 import { handleClosePopup } from "./handleClosePopup";
 const css = (t, ...args) => String.raw(t, ...args);
 
+interface cachedBlock {
+  uuid: BlockIdentity;
+  originalContent: string;
+}
+
+export var cachedOperations: cachedBlock[] = [];
+export const performCachedOperations = () => {
+  console.log("cache cleared")
+  cachedOperations = cachedOperations.reverse()
+  cachedOperations.forEach((operation) => {
+    if (operation.uuid) {
+      logseq.Editor.updateBlock(operation.uuid, operation.originalContent);
+    }
+  });
+  cachedOperations = [];
+};
 export var paperpile = "";
 export var paperpileParsed = [];
 const pluginId = PL.id;
@@ -22,47 +41,6 @@ const settings: SettingSchemaDesc[] = [
     default: "path/to/paperpile",
     type: "string",
   },
-  // {
-  //   key: "pageProperties",
-  //   title: "Properties to be added by default",
-  //   description: "Type the properties you want to be added by default",
-  //   default: [
-  //     "author",
-  //     "title",
-  //     "journal",
-  //     "year",
-  //     "volume",
-  //     "number",
-  //     "pages",
-  //     "doi",
-  //     "url",
-  //   ],
-  //   type: "enum",
-  //   enumPicker: "checkbox",
-  //   enumChoices: [
-  //     "author",
-  //     "title",
-  //     "journal",
-  //     "year",
-  //     "url",
-  //     "abstract",
-  //     "keywords",
-  //     "publisher",
-  //     "volume",
-  //     "number",
-  //     "pages",
-  //     "doi",
-  //     "url",
-  //   ],
-  // },
-  // {
-  //   key: "customPageContent",
-  //   title: "Custom Page Content to be inserted by default to the first block ",
-  //   description:
-  //     "Type the properties you want to be added by default to the first block of the page, use \\n to create a newline, you can use {author}, {title}, {journal}, {year}, {volume}, {number}, {pages}, {doi}, {url} in the value section",
-  //   default: "",
-  //   type: "string",
-  // },
   {
     key: "smartsearch",
     title: "Enable smart search?",
@@ -82,34 +60,44 @@ const settings: SettingSchemaDesc[] = [
   {
     key: "templatePage",
     title: "Template Page",
-    description: "Enter the name of the template page. On creating a literature note, this page's template will be followed. You can use {author}, {title}, {journal}, {year}, {volume}, {number}, {pages}, {doi}, {url} as placeholders",
+    description:
+      "Enter the name of the template page. On creating a literature note, this page's template will be followed. You can use {author}, {title}, {journal}, {year}, {volume}, {number}, {pages}, {doi}, {url} as placeholders",
     default: "",
     type: "string",
   },
   {
     key: "templateBlock",
     title: "Template Block",
-    description: "Enter the name of the template block, use logseq's in built template feature or smartblocks. On inserting inline references, this block's template will be followed. You can use {author}, {title}, {journal}, {year}, {volume}, {number}, {pages}, {doi}, {url} as placeholders",
+    description:
+      "Enter the name of the template block, use logseq's in built template feature or smartblocks. On inserting inline references, this block's template will be followed. You can use {author}, {title}, {journal}, {year}, {volume}, {number}, {pages}, {doi}, {url} as placeholders",
     default: "",
     type: "string",
   },
   {
     key: "pageTitle",
     title: "Page Title",
-    description: "Enter the template for the title of the page. You can use {author}, {title}, {journal}, {year}, {volume}, {number}, {pages}, {doi}, {url} as placeholders",
+    description:
+      "Enter the template for the title of the page. You can use {author}, {title}, {journal}, {year}, {volume}, {number}, {pages}, {doi}, {url} as placeholders",
     default: "{citekey}",
     type: "string",
-  }
+  },
 ];
 
-const dispatchPaperpileParse = (mode) => {
+const dispatchPaperpileParse = async (mode, uuid) => {
+  const block = await logseq.Editor.getBlock(uuid);
   if (paperpile === "") {
-    getPaperPile(mode);
+    getPaperPile(mode, uuid);
   } else {
-    showDB(paperpileParsed, mode);
+    logseq.Editor.updateBlock(uuid, `inserting...`);
+    cachedOperations.push({
+      uuid: uuid,
+      originalContent: block.content,
+    });
+    console.log(cachedOperations)
+    showDB(paperpileParsed, mode, uuid, block.content);
   }
 };
-const createDB = (mode) => {
+const createDB = (mode, uuid) => {
   const options: BibTeXParser.ParserOptions = {
     errorHandler: (err) => {
       console.warn("Citation plugin: error loading BibLaTeX entry:", err);
@@ -121,18 +109,19 @@ const createDB = (mode) => {
   ) as BibTeXParser.Bibliography;
 
   paperpileParsed = parsed.entries;
-  dispatchPaperpileParse(mode);
+  dispatchPaperpileParse(mode, uuid);
 };
 
-const showDB = (parsed, mode) => {
+const showDB = (parsed, mode, uuid, oc) => {
   paperpileParsed = parsed;
   console.log("mode is ", mode);
 
   ReactDOM.unmountComponentAtNode(document.getElementById("app"));
+  console.log(uuid)
   ReactDOM.render(
     <React.StrictMode>
       <SearchBar
-        paperpileParsed={{ parse: paperpileParsed, currentModeInput: mode }}
+        paperpileParsed={{ parse: paperpileParsed, currentModeInput: mode, currentUuid: uuid, originalContent: oc}}
       />
     </React.StrictMode>,
     document.getElementById("app")
@@ -141,17 +130,20 @@ const showDB = (parsed, mode) => {
   handleClosePopup();
 };
 
-const getPaperPile = async (mode) => {
+const getPaperPile = async (mode, uuid) => {
   console.log(`file://${logseq.settings.paperpilePath}`);
   axios
     .get(`file://${logseq.settings.paperpilePath}`)
     .then((result) => {
       paperpile = result.data;
-      createDB(mode);
+      createDB(mode, uuid);
     })
     .catch((err) => {
-      logseq.App.showMsg("Whoops!, Something went wrong when fetching the citation DB. Please check the path and try again."); 
-      console.log(err)});
+      logseq.App.showMsg(
+        "Whoops!, Something went wrong when fetching the citation DB. Please check the path and try again."
+      );
+      console.log(err);
+    });
 
   // axios.get('https://httpbin.org/status/200').
   // // Will throw a TypeError because the property doesn't exist.
@@ -163,9 +155,9 @@ function main() {
   console.info(`#${pluginId}: MAIN`);
   function createModel() {
     return {
-      show() {
-        dispatchPaperpileParse(0);
-      },
+      // show() {
+      //   dispatchPaperpileParse(0, uuid);
+      // },
     };
   }
 
@@ -174,27 +166,6 @@ function main() {
     zIndex: 11,
   });
 
-  // const openIconName = "template-plugin-open";
-
-  // logseq.provideStyle(css`
-  //   .${openIconName} {
-  //     opacity: 0.55;
-  //     font-size: 20px;
-  //     margin-top: 4px;
-  //   }
-
-  //   .${openIconName}:hover {
-  //     opacity: 0.9;
-  //   }
-  // `);
-
-  // logseq.App.registerUIItem("toolbar", {
-  //   key: openIconName,
-  //   template: `
-  //     <div data-on-click="show" class="${openIconName}">⚙️</div>
-  //   `,
-  // });
-
   logseq.App.registerCommand(
     "openAsPage",
     {
@@ -202,8 +173,8 @@ function main() {
       label: "Search and open reference as page",
       keybinding: { binding: "mod+shift+o" },
     },
-    () => {
-      dispatchPaperpileParse(2);
+    (e) => {
+      dispatchPaperpileParse(1, e.uuid);
     }
   );
   logseq.App.registerCommand(
@@ -213,8 +184,8 @@ function main() {
       label: "Create Inline Link to Lit Note",
       keybinding: { binding: "mod+shift+l" },
     },
-    () => {
-      dispatchPaperpileParse(1);
+    (e) => {
+      dispatchPaperpileParse(2, e.uuid);
     }
   );
   logseq.App.registerCommand(
@@ -224,19 +195,28 @@ function main() {
       label: "Create Inline Note",
       keybinding: { binding: "mod+shift+i" },
     },
-    () => {
-      dispatchPaperpileParse(0);
+    (e) => {
+      dispatchPaperpileParse(0, e.uuid);
     }
   );
-  logseq.Editor.registerSlashCommand("Create Inline Literature Note", async() => {
-    dispatchPaperpileParse(0);
-  });
-  logseq.Editor.registerSlashCommand("Create Inline Link to Lit Note", async() => {
-    dispatchPaperpileParse(1);
-  });
-  logseq.Editor.registerSlashCommand("Search and open reference as page", async() => {
-    dispatchPaperpileParse(2);
-  });
+  logseq.Editor.registerSlashCommand(
+    "Create Inline Literature Note",
+    async (e) => {
+      dispatchPaperpileParse(0, e.uuid);
+    }
+  );
+  logseq.Editor.registerSlashCommand(
+    "Create Inline Link to Lit Note",
+    async (e) => {
+      dispatchPaperpileParse(2, e.uuid);
+    }
+  );
+  logseq.Editor.registerSlashCommand(
+    "Search and open reference as page",
+    async (e) => {
+      dispatchPaperpileParse(1, e.uuid);
+    }
+  );
 }
 
 logseq.ready(main).catch(console.error);

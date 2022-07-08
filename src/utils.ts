@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useMountedState } from "react-use";
 // import * as BibTeXParser from "@retorquere/bibtex-parser";
 import { BlockEntity, PageIdentity } from "@logseq/libs/dist/LSPlugin.user";
+import { cachedOperations, performCachedOperations } from "./main";
 
 const reg = /{.*}/g;
 var data = null;
@@ -42,8 +43,23 @@ export const useSidebarVisible = () => {
 
 const parseTemplate = (type = "", citeKey = "", fields = {}, text) => {
   let template = text;
+  console.log(fields);
   template = template.replaceAll("{citekey}", citeKey);
   template = template.replaceAll("{type}", type);
+  template = template.replaceAll("{type}", type);
+  try {
+    template = template.replaceAll(
+      /{author\s*lastname}/g,
+      fields.author[0].split(",")[0]
+    );
+    template = template.replaceAll(
+      /{author\s*firstname}/g,
+      fields.author[0].split(",")[1]
+    );
+  } catch (error) {
+    console.error(error);
+  }
+
   for (const key in fields) {
     if (fields.hasOwnProperty(key)) {
       const element = fields[key];
@@ -76,32 +92,36 @@ const createLiteratureNote = async (note, isNoteReference) => {
   }
   if (!isNoteReference) {
     const currentBlock = await logseq.Editor.getCurrentBlock();
+
     if (currentBlock != null) {
-      logseq.Editor.insertBlock(currentBlock.uuid, `[[${note.key}]]`, {
-        sibling: false,
-      });
+      logseq.Editor.insertBlock(currentBlock.uuid, `[[${note.key}]]`);
     } else {
       logseq.App.showMsg(
         "Oops, looks like this wasn't called from inside a block. Please try again!"
       );
     }
   }
+  performCachedOperations();
 };
 
-const insertLiteratureNoteInline = async (note) => {
-  const currentBlock = await logseq.Editor.getCurrentBlock();
+const insertLiteratureNoteInline = async (note, uuid) => {
+  const currentBlock = await logseq.Editor.getBlock(uuid);
+  const blocks = await parseTemplateBlock(note.type, note.key, note.fields);
+  console.log(blocks);
+  // setTimeout(async() => {
+
   if (currentBlock != null) {
-    await logseq.Editor.insertBatchBlock(
-      currentBlock.uuid,
-      await parseTemplateBlock(note.type, note.key, note.fields),
-      { sibling: true }
-    );
+    await logseq.Editor.insertBatchBlock(currentBlock.uuid, blocks, {
+      sibling: true,
+    });
   }
 };
+// , 1000);};
 
-export const actionRouter = (actionKey: any, note, uuid = undefined) => {
+export const actionRouter = (actionKey: any, note, uuid = undefined, oc  = undefined) => {
   if (actionKey == "inline" || actionKey == 0) {
-    insertLiteratureNoteInline(note);
+    console.log(uuid);
+    insertLiteratureNoteInline(note, uuid);
   }
   if (actionKey == "goToReference" || actionKey == 1) {
     createLiteratureNote(note, true);
@@ -110,6 +130,13 @@ export const actionRouter = (actionKey: any, note, uuid = undefined) => {
     createLiteratureNote(note, false);
   }
   logseq.hideMainUI();
+  //provided uuid and Oc is not null, update block
+  console.log(uuid)
+  console.log(oc)
+  console.log("oc")
+  if (uuid != undefined && oc != undefined) {
+    logseq.Editor.updateBlock(uuid, oc);
+  }
 };
 
 const parseTemplatePage = async (type2, citekey2, filters2) => {
@@ -140,9 +167,16 @@ const parseTemplateBlock = async (type2, citekey2, filters2) => {
   triggerParse(data);
   return data.children;
 };
-function triggerParse(block) {
+function triggerParse(block: BlockEntity) {
   if (block.content) {
-    console.log("hi");
+    delete block.left;
+    delete block.file;
+    delete block.page;
+    delete block.pathrefs;
+    delete block.parent;
+    delete block.page;
+    delete block.level;
+    delete block.id;
     let regexMatched = block.content.match(reg);
     for (const x in regexMatched) {
       let toBeParsed = block.content;

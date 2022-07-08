@@ -10,7 +10,7 @@ import SegmentedControl from "./segmentedControl";
 import { actionRouter } from "./utils";
 
 const modes = ["inline", "goToReference", "insertLink"];
-const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed) => {
+const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
   const [searchTerm, setSearchTerm] = React.useState("");
   const [searchResults, setSearchRef] = React.useState([]);
   const [highlightedResult, setHighlightedRef] = React.useState(null);
@@ -106,10 +106,14 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed) => {
     return () => document.removeEventListener("keydown", keyControl);
   }, [highlightedResult]);
 
-  const handleEnter = () => {
+  const handleEnter = (index = null) => {
     if (highlightedRef.current != null) {
       let citationDetails = searchRef.current[highlightedRef.current];
-      actionRouter(currentModeRef.current, citationDetails)
+      console.log(paperpileParsed)
+      console.log("paperpileParsed")
+      const uuidCurrent = paperpileParsed.paperpileParsed.currentUuid;
+      const ocCurrent = paperpileParsed.paperpileParsed.originalContent;
+      actionRouter(currentModeRef.current, citationDetails, uuidCurrent, ocCurrent)
     }
   }
   const keyControl = (event) => {
@@ -142,7 +146,7 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed) => {
     }
     event.handled = true;
   };
-  
+
   const updateHighlight = () => {
     for (const x in searchRef.current) {
       if (x == highlightedResult) {
@@ -202,24 +206,24 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed) => {
           </div>
           <div className="w-full scrollable p-2" id="citationScrollableDiv">
             <ul className="w-full text-sm ">
-              {searchResults.map((item) => (
+              {searchResults.map((item, index) => (
                 <div
                   id={item.key}
-                  onClick={handleEnter}
+                  onClick={()=>{handleEnter(index)}}
                   className="hover:bg-[#4c4c4c] p-2 rounded-lg flex flex-auto"
                 >
                   <div className=" max-w-4">
                     <div
                       title="template"
                       className="text-xs rounded border mr-2 px-1 w-5"
-                      onClick={handleEnter}
+                      onClick={()=>{handleEnter(index)}}
                     >
                       C
                     </div>
                   </div>
                   <li
                     className="inline-block px-2 searchItem"
-                    onClick={handleEnter}
+                    onClick={()=>{handleEnter(index)}}
                   >
                     {item.fields.title[0]}
                   </li>
