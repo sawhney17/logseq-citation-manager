@@ -1,3 +1,11 @@
+## [1.4.1](https://github.com/sawhney17/logseq-citation-manager/compare/v1.4.0...v1.4.1) (2022-07-08)
+
+
+### Bug Fixes
+
+* **inline:** inline links were broken ([53b3fc8](https://github.com/sawhney17/logseq-citation-manager/commit/53b3fc8807f54f58d29e8989816674cdf3a251ea))
+* **page properties:** issue ([2d3641b](https://github.com/sawhney17/logseq-citation-manager/commit/2d3641bc8157553d9a31b024df64b1d4c3247802))
+
 # [1.4.0](https://github.com/sawhney17/logseq-citation-manager/compare/v1.3.0...v1.4.0) (2022-07-08)
 
 
