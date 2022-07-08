@@ -19,6 +19,9 @@ interface cachedBlock {
   originalContent: string;
 }
 
+export var uuidOriginals = "";
+export var originalContentC = "";
+
 // export var cachedOperations: cachedBlock[] = [];
 // export const performCachedOperations = () => {
 //   cachedOperations = cachedOperations.reverse()
@@ -115,6 +118,8 @@ const showDB = (parsed, mode, uuid, oc) => {
   paperpileParsed = parsed;
   console.log("mode is ", mode);
 
+  uuidOriginals = uuid
+  originalContentC = oc
   ReactDOM.unmountComponentAtNode(document.getElementById("app"));
   console.log(uuid)
   ReactDOM.render(
