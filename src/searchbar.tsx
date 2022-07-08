@@ -19,7 +19,7 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
   const [currentMode, setCurrentMode] = useState(
     paperpileParsed.paperpileParsed.currentModeInput
   );
-  //on render focus on the input citationSearchbar
+  //on render focus on the input citationSearchbar 
   React.useEffect(() => {
     setTimeout(() => {
       const input = document.getElementById("citationSearchbar");
