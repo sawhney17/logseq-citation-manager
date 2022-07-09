@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/sawhney17/logseq-citation-manager/compare/v1.6.0...v1.6.1) (2022-07-09)
+
+
+### Bug Fixes
+
+* **icon:** icon missing [#12](https://github.com/sawhney17/logseq-citation-manager/issues/12) ([ef9d626](https://github.com/sawhney17/logseq-citation-manager/commit/ef9d626339afeb1e535f64c9db5d34bfe41de540))
+
 # [1.6.0](https://github.com/sawhney17/logseq-citation-manager/compare/v1.5.3...v1.6.0) (2022-07-09)
 
 
