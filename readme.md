@@ -21,6 +21,12 @@
 5. Select the reference using the keyboard or mouse
 6. Watch as your action is performed!
 
+
+## Paperpile
+- For usage with paperpile, create a synced export to the .bib format
+- Use a sync provider to make it persist on desktop
+## Zotero
+- https://github.com/hans/obsidian-citation-plugin#setup
 ## Configuration
 - This plugin has a variety of configuration options
 - `citationReferenceDB`
@@ -52,3 +58,6 @@
 	- {title} by {author}
 		- {abstract}
 	```
+## Credits
+- Credits to [Obsidian Citation Plugin](https://github.com/hans/obsidian-citation-plugin) for direct inspiration
+- Credits to [Kerim](https://github.com/kerim) for sponsoring and the idea for the plugin
