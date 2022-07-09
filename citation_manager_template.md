@@ -1,6 +1,6 @@
 alias:: {author lastname} ({year}) {title}
 tags:: [[publication]], [[Logseq citation manager]], 
-type:: type;
+type:: {type};
 status:: 
 icon:: 📚
 
