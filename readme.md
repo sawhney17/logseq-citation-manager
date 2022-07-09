@@ -15,7 +15,7 @@
 2. Configure templates, you can use the provided templates here for inspiration. Templates have to be added on a per graph basis. 
 3. Configure settings
 4. Call the citation insertion UI
-	- Use `/Create Inline Literature Note` to insert a reference based on a block template. Also callable via `mod+shift+I`
+	- Use `/Create Inline Literature Note` to insert a literature note inline based on a block template. Also callable via `mod+shift+I`
 	- Use `/Create Inline Link to Lit Note` to create a page following a specific template and insert a link(optionally aliased) in the currrent block. Also callable via `mod+shift+L`
 	- Use `/Search and open reference as page` to search for a reference and create it as a page following a specific template if it doesn't already exist. Also callable via `mod+shift+o`
 5. Select the reference using the keyboard or mouse
