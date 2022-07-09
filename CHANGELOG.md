@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/sawhney17/logseq-citation-manager/compare/v1.5.3...v1.6.0) (2022-07-09)
+
+
+### Features
+
+* **links:** Support aliased links [#11](https://github.com/sawhney17/logseq-citation-manager/issues/11) ([77795aa](https://github.com/sawhney17/logseq-citation-manager/commit/77795aaa4009c395eb71c098d4c83bd8bbc66be2))
+
 ## [1.5.3](https://github.com/sawhney17/logseq-citation-manager/compare/v1.5.2...v1.5.3) (2022-07-08)
 
 
