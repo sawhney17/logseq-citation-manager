@@ -1,3 +1,10 @@
+## [1.6.4](https://github.com/sawhney17/logseq-citation-manager/compare/v1.6.3...v1.6.4) (2022-07-09)
+
+
+### Bug Fixes
+
+* **page:** duplication with mouse ([1c99b23](https://github.com/sawhney17/logseq-citation-manager/commit/1c99b23c0ff255e5626e5481b8e7c069568fe02b))
+
 ## [1.6.3](https://github.com/sawhney17/logseq-citation-manager/compare/v1.6.2...v1.6.3) (2022-07-09)
 
 
