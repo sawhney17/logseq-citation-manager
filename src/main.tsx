@@ -52,7 +52,7 @@ const settings: SettingSchemaDesc[] = [
     key: "templatePage",
     title: "Template Page",
     description:
-      "Enter the name of the template page. On creating a literature note, this page's template will be followed. You can use {author}, {title}, {journal}, {year}, {volume}, {number}, {pages}, {doi}, {url} as placeholders",
+      "Enter the name of the template page. On creating a literature note, this page's template will be followed. You can use {type}, {author}, {title}, {journal}, {year}, {volume}, {number}, {pages}, {doi}, {url} and other properties as placeholders",
     default: "",
     type: "string",
   },
@@ -63,6 +63,13 @@ const settings: SettingSchemaDesc[] = [
       "Enter the name of the template block, use logseq's in built template feature or smartblocks. On inserting inline references, this block's template will be followed. You can use {author}, {title}, {journal}, {year}, {volume}, {number}, {pages}, {doi}, {url} as placeholders",
     default: "",
     type: "string",
+  },
+  {
+    key: "linkAlias",
+    title: "Optionally Include Link Aliases",
+    description: "For inserted links, optionally display an alias to the page. i.e. writing '{author lastname} {year}' would create a link to the actual citation page but it would display as the text you entered below. Leave it blank if aliases are not desired. For more about aliases visit: https://aryansawhney.com/pages/the-ultimate-guide-to-aliases-in-logseq/",
+    default: "",
+    type: "string"
   },
   {
     key: "pageTitle",

@@ -101,9 +101,19 @@ const createLiteratureNote = async (
     const currentBlock = await logseq.Editor.getCurrentBlock();
 
     if (currentBlock != null) {
+      //If logseq.settings.linkAlias is not "" then the formattedLink will be [parseTemplate(linkAlias)]([[pageTitle]])
+      const formattedLink =
+        logseq.settings.linkAlias != ""
+          ? `[${parseTemplate(
+              note.type,
+              note.key,
+              note.fields,
+              logseq.settings.linkAlias
+            )}]([[${pageTitle}]])`
+          : `[[${pageTitle}]]`;
       logseq.Editor.updateBlock(
         currentBlock.uuid,
-        `${originalContent}[[${pageTitle}]]`
+        `${originalContent}${formattedLink}`
       );
     } else {
       logseq.App.showMsg(
