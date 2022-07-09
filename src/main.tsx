@@ -26,10 +26,10 @@ export var paperpileParsed = [];
 const pluginId = PL.id;
 const settings: SettingSchemaDesc[] = [
   {
-    key: "paperpilePath",
-    title: "Path to PaperPile DB",
-    description: "Enter the path your paperpile DB",
-    default: "path/to/paperpile",
+    key: "citationReferenceDB",
+    title: "Path to Citation DB",
+    description: "Enter the path your citation DB",
+    default: "path/to/citationDB.bib",
     type: "string",
   },
   {
@@ -158,9 +158,9 @@ const getPaperPile = async () => {
   const start = performance.now(); // returns something like 138.899999998509884, which means 138.9 milliseconds passed
   // ...
 
-  console.log(`file://${logseq.settings.paperpilePath}`);
+  console.log(`file://${logseq.settings.citationReferenceDB}`);
   axios
-    .get(`file://${logseq.settings.paperpilePath}`)
+    .get(`file://${logseq.settings.citationReferenceDB}`)
     .then((result) => {
       paperpile = result.data;
       createDB();
