@@ -1,3 +1,12 @@
+## [1.6.2](https://github.com/sawhney17/logseq-citation-manager/compare/v1.6.1...v1.6.2) (2022-07-09)
+
+
+### Bug Fixes
+
+* **ci:** delete lock file ([8142e3b](https://github.com/sawhney17/logseq-citation-manager/commit/8142e3bf0fe0f90d4b5b844e7d40c83959c8f9ef))
+* **dependencies:** update bibtex parser version ([edf33df](https://github.com/sawhney17/logseq-citation-manager/commit/edf33df5eca5852e0e9bf2820ca0c290d018b439))
+* **deps:** upgrade dependencies ([b16a15f](https://github.com/sawhney17/logseq-citation-manager/commit/b16a15fecded1676c79be45a96bee14b511fa00b))
+
 ## [1.6.1](https://github.com/sawhney17/logseq-citation-manager/compare/v1.6.0...v1.6.1) (2022-07-09)
 
 
