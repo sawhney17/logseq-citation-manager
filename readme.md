@@ -47,5 +47,8 @@
 
 ## Templates
  - You can check out ./citation_manager_template.md for an example of a page template
- - Here is an example of a block template
-	- 
+ - Here is an example of a inline literature note template
+	```
+	- {title} by {author}
+		- {abstract}
+	```
