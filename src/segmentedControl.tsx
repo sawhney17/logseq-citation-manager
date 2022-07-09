@@ -12,7 +12,7 @@ const SegmentedControl = ({
 }) => {
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
   const componentReady = useRef();
-
+ 
   // Determine when the component is "ready"
   useEffect(() => {
     //@ts-expect-error
