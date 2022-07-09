@@ -11,7 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "@logseq/libs": "^0.0.6",
-    "@retorquere/bibtex-parser": "^6.3.3",
+    "@retorquere/bibtex-parser": "^6.3.7",
     "axios": "^0.27.1",
     "minisearch": "^4.0.3",
     "react": "^18.0.0",
