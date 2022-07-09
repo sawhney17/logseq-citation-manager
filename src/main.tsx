@@ -19,6 +19,14 @@ interface cachedBlock {
   originalContent: string;
 }
 
+var editAgain = true;
+
+export const shouldEditAgain = () => {
+  return editAgain
+}
+export const setEditAgain = () => {
+  editAgain = !editAgain;
+};
 export var uuidOriginals = "";
 export var originalContentC = "";
 export var paperpile = "";
@@ -67,9 +75,10 @@ const settings: SettingSchemaDesc[] = [
   {
     key: "linkAlias",
     title: "Optionally Include Link Aliases",
-    description: "For inserted links, optionally display an alias to the page. i.e. writing '{author lastname} {year}' would create a link to the actual citation page but it would display as the text you entered below. Leave it blank if aliases are not desired. For more about aliases visit: https://aryansawhney.com/pages/the-ultimate-guide-to-aliases-in-logseq/",
+    description:
+      "For inserted links, optionally display an alias to the page. i.e. writing '{author lastname} {year}' would create a link to the actual citation page but it would display as the text you entered below. Leave it blank if aliases are not desired. For more about aliases visit: https://aryansawhney.com/pages/the-ultimate-guide-to-aliases-in-logseq/",
     default: "",
-    type: "string"
+    type: "string",
   },
   {
     key: "pageTitle",
@@ -150,6 +159,7 @@ const showDB = (parsed, mode, uuid, oc) => {
     </React.StrictMode>,
     document.getElementById("app")
   );
+  editAgain = true
   logseq.showMainUI();
   handleClosePopup();
 };

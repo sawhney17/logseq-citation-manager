@@ -8,6 +8,7 @@ import MiniSearch from "minisearch";
 // import SegmentedControl from "rn-segmented-control";
 import SegmentedControl from "./segmentedControl";
 import { actionRouter } from "./utils";
+import { shouldEditAgain, setEditAgain } from "./main";
 
 const modes = ["inline", "goToReference", "insertLink"];
 const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
@@ -19,7 +20,7 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
   const [currentMode, setCurrentMode] = useState(
     paperpileParsed.paperpileParsed.currentModeInput
   );
-  //on render focus on the input citationSearchbar 
+  //on render focus on the input citationSearchbar
   React.useEffect(() => {
     setTimeout(() => {
       const input = document.getElementById("citationSearchbar");
@@ -69,7 +70,7 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
         .filter(Boolean)
     );
     const duration = performance.now() - start;
-  console.log("nowjdss"+ duration)
+    console.log("nowjdss" + duration);
   }
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
@@ -123,17 +124,21 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
   }, [highlightedResult]);
 
   const handleEnter = (index = null) => {
-    const resultKey = index == null ? highlightedResult : index;
-    if (resultKey != null) {
-      let citationDetails = searchRef.current[resultKey];
-      const uuidCurrent = paperpileParsed.paperpileParsed.currentUuid;
-      const ocCurrent = paperpileParsed.paperpileParsed.originalContent;
-      actionRouter(
-        currentModeRef.current,
-        citationDetails,
-        uuidCurrent,
-        ocCurrent
-      );
+    console.log(shouldEditAgain())
+    if (shouldEditAgain()) {
+      setEditAgain()
+      const resultKey = index == null ? highlightedResult : index;
+      if (resultKey != null) {
+        let citationDetails = searchRef.current[resultKey];
+        const uuidCurrent = paperpileParsed.paperpileParsed.currentUuid;
+        const ocCurrent = paperpileParsed.paperpileParsed.originalContent;
+        actionRouter(
+          currentModeRef.current,
+          citationDetails,
+          uuidCurrent,
+          ocCurrent
+        );
+      }
     }
   };
   const keyControl = (event) => {
