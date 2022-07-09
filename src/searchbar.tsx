@@ -47,6 +47,7 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
     setSearchRef(data);
   };
   function updateTemplates() {
+    const start = performance.now(); // returns something like 138.899999998509884, which means 138.9 milliseconds passed
     setSmartblocks(
       paperpileParsed.paperpileParsed.parse
         .map((item) => {
@@ -67,6 +68,8 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
         })
         .filter(Boolean)
     );
+    const duration = performance.now() - start;
+  console.log("nowjdss"+ duration)
   }
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
