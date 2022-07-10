@@ -99,15 +99,11 @@ const settings: SettingSchemaDesc[] = [
 ];
 
 const dispatchPaperpileParse = async (mode, uuid) => {
-  const start = performance.now(); // returns something like 138.899999998509884, which means 138.9 milliseconds passed
-
   if (!logseq.settings.reindexOnStartup) {
     if ((await logseq.FileStorage.hasItem("paperpileDB.json")) == true) {
       paperpileParsed = JSON.parse(
         await logseq.FileStorage.getItem("paperpileDB.json")
       );
-      const duration = performance.now() - start;
-      console.log("nowjd" + duration);
     }
   }
   const block = await logseq.Editor.getBlock(uuid);
@@ -120,7 +116,6 @@ const dispatchPaperpileParse = async (mode, uuid) => {
   }
 };
 const createDB = () => {
-  const start = performance.now(); // returns something like 138.899999998509884, which means 138.9 milliseconds passed
   const options: BibTeXParser.ParserOptions = {
     errorHandler: (err) => {
       console.warn("Citation plugin: error loading BibLaTeX entry:", err);
@@ -136,8 +131,6 @@ const createDB = () => {
     "paperpileDB.json",
     JSON.stringify(paperpileParsed)
   );
-  const duration = performance.now() - start;
-  console.log("create " + duration);
 };
 
 const showDB = (parsed, mode, uuid, oc) => {
@@ -165,7 +158,6 @@ const showDB = (parsed, mode, uuid, oc) => {
 };
 
 const getPaperPile = async () => {
-  const start = performance.now(); // returns something like 138.899999998509884, which means 138.9 milliseconds passed
   // ...
 
   console.log(`file://${logseq.settings.citationReferenceDB}`);
@@ -176,18 +168,11 @@ const getPaperPile = async () => {
       createDB();
     })
     .catch((err) => {
-      logseq.App.showMsg(
-        "Whoops!, Something went wrong when fetching the citation DB. Please check the path and try again."
+      logseq.UI.showMsg(
+        "Whoops!, Something went wrong when fetching the citation DB. Please check the path and try again.", "Error", {timeout: 5}
       );
       console.log(err);
     });
-
-  // axios.get('https://httpbin.org/status/200').
-  // // Will throw a TypeError because the property doesn't exist.
-  // then(res => console.log("res.doesNotExist.throwAnError")).
-  // catch(err => err);
-  const duration = performance.now() - start;
-  console.log("get " + duration);
 };
 logseq.useSettingsSchema(settings);
 function main() {
