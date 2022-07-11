@@ -26,7 +26,16 @@ export const shouldEditAgain = () => {
 }
 export const setEditAgain = () => {
   editAgain = !editAgain;
+
+  setTimeout(
+    ()=>{editAgain = true},
+    1000
+  )
 };
+
+export const resetEditAgain = () => {
+  editAgain = true
+}
 export var uuidOriginals = "";
 export var originalContentC = "";
 export var paperpile = "";
@@ -134,8 +143,8 @@ const createDB = () => {
 };
 
 const showDB = (parsed, mode, uuid, oc) => {
+  editAgain = true
   paperpileParsed = parsed;
-
   uuidOriginals = uuid;
   originalContentC = oc;
   ReactDOM.unmountComponentAtNode(document.getElementById("app"));

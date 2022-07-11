@@ -8,7 +8,7 @@ import MiniSearch from "minisearch";
 // import SegmentedControl from "rn-segmented-control";
 import SegmentedControl from "./segmentedControl";
 import { actionRouter } from "./utils";
-import { shouldEditAgain, setEditAgain } from "./main";
+import { shouldEditAgain, setEditAgain, resetEditAgain } from "./main";
 
 const modes = ["inline", "goToReference", "insertLink"];
 const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
