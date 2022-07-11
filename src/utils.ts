@@ -44,8 +44,11 @@ export const useSidebarVisible = () => {
 
 const parseTemplate = (text) => {
   let template = text;
+  console.log("replacements")
+  console.log(citeKey)
+  console.log(fields)
+  console.log(type)
   template = template.replaceAll("{citekey}", citeKey);
-  template = template.replaceAll("{type}", type);
   template = template.replaceAll("{type}", type);
   try {
     template = template.replaceAll(
