@@ -1,3 +1,10 @@
+## [1.6.7](https://github.com/sawhney17/logseq-citation-manager/compare/v1.6.6...v1.6.7) (2022-07-11)
+
+
+### Bug Fixes
+
+* **ci:** Add more operations ([1d26d41](https://github.com/sawhney17/logseq-citation-manager/commit/1d26d41fa87c1aa1f70efd9301d9c368046fef74))
+
 ## [1.6.6](https://github.com/sawhney17/logseq-citation-manager/compare/v1.6.5...v1.6.6) (2022-07-11)
 
 
