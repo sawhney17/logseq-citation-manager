@@ -141,6 +141,7 @@ export const actionRouter = (
 ) => {
   console.log("This is the new found note data")
   console.log(note)
+  console.log(note.type + "is the type")
   type = note.type;
   citeKey = note.key;
   fields = note.fields;
