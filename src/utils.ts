@@ -9,7 +9,7 @@ const reg = /{.*}/g;
 var data = null;
 var type = "";
 var citeKey = "";
-var fields:  {[key: string]: string[] }  = {};
+var fields: { [key: string]: string[] } = {};
 
 export const useAppVisible = () => {
   const [visible, setVisible] = useState(logseq.isMainUIVisible);
@@ -44,13 +44,14 @@ export const useSidebarVisible = () => {
 
 const parseTemplate = (text) => {
   var template = text;
-  console.log("repl2acements")
-  console.log(citeKey)
-  console.log(fields)
-  console.log(type)
+  console.log("repl2acements");
+  console.log(citeKey);
+  console.log(fields);
+  console.log(type);
   template = template.replaceAll("{citekey}", citeKey);
+  template = template.replaceAll("{key}", citeKey);
   template = template.replaceAll("{type}", type);
-  console.log(template)
+  console.log(template);
   try {
     template = template.replaceAll(
       /{author\s*lastname}/g,
@@ -62,30 +63,43 @@ const parseTemplate = (text) => {
       //@ts-ignore-error
       fields.author[0].split(",")[1]
     );
+    template = template.replaceAll(
+      /{author\s*lastname}\+/g,
+      fields.author.forEach((value) => {
+        return value.split(",")[0];
+      })
+    );
+    template = template.replaceAll(
+      /{author\s*firstname\+}/g,
+      fields.author.forEach((value) => {
+        return value.split(",")[1];
+      })
+    );
   } catch (error) {
     // console.error(error);
   }
-  template = template.replaceAll("file++", fields.file)
+  template = template.replaceAll("file++", fields.file);
   for (const key in fields) {
     if (fields.hasOwnProperty(key)) {
       const element = fields[key];
       template = template.replaceAll(`{${key}}`, element[0]);
-      template = template.replaceAll(`{${key}++}`, element.toString())
+      template = template.replaceAll(`{${key}+}`, element.toString());
+      template = template.replaceAll(`{${key}++}`, () => {
+        let text = ""
+        element.forEach((elemental)=>{
+          text = text + `[[${elemental}]]`
+        })
+        return text
+      });
     }
   }
-  console.log(template)
-  template = template.replaceAll(/{[A-z]*}/g, "");
-  console.log(template)
+  console.log(template);
+  template = template.replaceAll(/{[A-z]*\+*}/g, "");
+  console.log(template);
   return template;
 };
-const createLiteratureNote = async (
-  isNoteReference,
-  originalContent,
-  uuid
-) => {
-  const pageTitle = parseTemplate(
-    logseq.settings.pageTitle
-  );
+const createLiteratureNote = async (isNoteReference, originalContent, uuid) => {
+  const pageTitle = parseTemplate(logseq.settings.pageTitle);
   if ((await logseq.Editor.getPage(pageTitle)) == null) {
     const blocks = await parseTemplatePage();
     logseq.Editor.createPage(
@@ -108,9 +122,7 @@ const createLiteratureNote = async (
       //If logseq.settings.linkAlias is not "" then the formattedLink will be [parseTemplate(linkAlias)]([[pageTitle]])
       const formattedLink =
         logseq.settings.linkAlias != ""
-          ? `[${parseTemplate(
-              logseq.settings.linkAlias
-            )}]([[${pageTitle}]])`
+          ? `[${parseTemplate(logseq.settings.linkAlias)}]([[${pageTitle}]])`
           : `[[${pageTitle}]]`;
       logseq.Editor.updateBlock(
         currentBlock.uuid,
@@ -146,9 +158,9 @@ export const actionRouter = (
   uuid = undefined,
   oc = undefined
 ) => {
-  console.log("This is the new found note data")
-  console.log(note)
-  console.log(note.type + "is the type")
+  console.log("This is the new found note data");
+  console.log(note);
+  console.log(note.type + "is the type");
   type = note.type;
   citeKey = note.key;
   fields = note.fields;
