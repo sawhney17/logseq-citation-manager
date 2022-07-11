@@ -22,20 +22,19 @@ interface cachedBlock {
 var editAgain = true;
 
 export const shouldEditAgain = () => {
-  return editAgain
-}
+  return editAgain;
+};
 export const setEditAgain = () => {
   editAgain = !editAgain;
 
-  setTimeout(
-    ()=>{editAgain = true},
-    1000
-  )
+  setTimeout(() => {
+    editAgain = true;
+  }, 1000);
 };
 
 export const resetEditAgain = () => {
-  editAgain = true
-}
+  editAgain = true;
+};
 export var uuidOriginals = "";
 export var originalContentC = "";
 export var paperpile = "";
@@ -105,14 +104,21 @@ const settings: SettingSchemaDesc[] = [
     default: true,
     type: "boolean",
   },
+  {
+    key: "fileTemplate",
+    title: "Template for File URLS",
+    description: "If a bibtex entry has a file associated with it, when you call {file++}, this template will be applied to each individual link. Use {fileLink} to refer to the link. You can use {title} and {key} as well. ",
+    default: "![{title}](file://{fileLink})",
+    type: "string"
+  }
 ];
 
 const dispatchPaperpileParse = async (mode, uuid) => {
   if (!logseq.settings.reindexOnStartup) {
     if ((await logseq.FileStorage.hasItem("paperpileDB.json")) == true) {
-      paperpileParsed = JSON.parse(
-        await logseq.FileStorage.getItem("paperpileDB.json")
-      );
+      // paperpileParsed = JSON.parse(
+      //   await logseq.FileStorage.getItem("paperpileDB.json")
+      // );
     }
   }
   const block = await logseq.Editor.getBlock(uuid);
@@ -143,7 +149,7 @@ const createDB = () => {
 };
 
 const showDB = (parsed, mode, uuid, oc) => {
-  editAgain = true
+  editAgain = true;
   paperpileParsed = parsed;
   uuidOriginals = uuid;
   originalContentC = oc;
@@ -161,24 +167,29 @@ const showDB = (parsed, mode, uuid, oc) => {
     </React.StrictMode>,
     document.getElementById("app")
   );
-  editAgain = true
+  editAgain = true;
   logseq.showMainUI();
   handleClosePopup();
 };
 
 const getPaperPile = async () => {
   // ...
-
-  console.log(`file://${logseq.settings.citationReferenceDB}`);
   axios
     .get(`file://${logseq.settings.citationReferenceDB}`)
-    .then((result) => {
+    .then(async (result) => {
       paperpile = result.data;
-      createDB();
+      if (logseq.settings.citationReferenceDB.endsWith(".json")) {
+        logseq.UI.showMsg("Sucessfully updated the DB with JSON");
+        paperpileParsed = JSON.parse(paperpile);
+      } else {
+        createDB();
+      }
     })
     .catch((err) => {
       logseq.UI.showMsg(
-        "Whoops!, Something went wrong when fetching the citation DB. Please check the path and try again.", "Error", {timeout: 5}
+        "Whoops!, Something went wrong when fetching the citation DB. Please check the path and try again.",
+        "Error",
+        { timeout: 5 }
       );
       console.log(err);
     });

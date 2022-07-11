@@ -78,24 +78,32 @@ const parseTemplate = (text) => {
   } catch (error) {
     // console.error(error);
   }
-  template = template.replaceAll("file++", fields.file);
+  template = template.replaceAll("{file++}", () => {
+    let text = "";
+    fields.file?.forEach((individualFile) => {
+      text =
+        text +
+        `${logseq.settings.fileTemplate
+          .replaceAll(/{filelink}/gi, individualFile)
+          .replaceAll(/{citekey}/gi, citeKey)}`;
+    });
+    return text
+  });
   for (const key in fields) {
     if (fields.hasOwnProperty(key)) {
       const element = fields[key];
       template = template.replaceAll(`{${key}}`, element[0]);
       template = template.replaceAll(`{${key}+}`, element.toString());
       template = template.replaceAll(`{${key}++}`, () => {
-        let text = ""
-        element.forEach((elemental)=>{
-          text = text + `[[${elemental}]]`
-        })
-        return text
+        let text = "";
+        element.forEach((elemental) => {
+          text = text + `[[${elemental}]]`;
+        });
+        return text;
       });
     }
   }
-  console.log(template);
   template = template.replaceAll(/{[A-z]*\+*}/g, "");
-  console.log(template);
   return template;
 };
 const createLiteratureNote = async (isNoteReference, originalContent, uuid) => {
