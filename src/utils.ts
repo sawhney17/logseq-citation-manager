@@ -9,7 +9,7 @@ const reg = /{.*}/g;
 var data = null;
 var type = "";
 var citeKey = "";
-var fields = {};
+var fields:  {[key: string]: string[] }  = {};
 
 export const useAppVisible = () => {
   const [visible, setVisible] = useState(logseq.isMainUIVisible);
@@ -43,13 +43,14 @@ export const useSidebarVisible = () => {
 };
 
 const parseTemplate = (text) => {
-  let template = text;
-  console.log("replacements")
+  var template = text;
+  console.log("repl2acements")
   console.log(citeKey)
   console.log(fields)
   console.log(type)
   template = template.replaceAll("{citekey}", citeKey);
   template = template.replaceAll("{type}", type);
+  console.log(template)
   try {
     template = template.replaceAll(
       /{author\s*lastname}/g,
@@ -64,14 +65,17 @@ const parseTemplate = (text) => {
   } catch (error) {
     // console.error(error);
   }
-
+  template = template.replaceAll("file++", fields.file)
   for (const key in fields) {
     if (fields.hasOwnProperty(key)) {
       const element = fields[key];
       template = template.replaceAll(`{${key}}`, element[0]);
+      template = template.replaceAll(`{${key}++}`, element.toString())
     }
   }
-  template = template.replaceAll(/{.*}/g, "");
+  console.log(template)
+  template = template.replaceAll(/{[A-z]*}/g, "");
+  console.log(template)
   return template;
 };
 const createLiteratureNote = async (
