@@ -1,3 +1,11 @@
+## [1.6.5](https://github.com/sawhney17/logseq-citation-manager/compare/v1.6.4...v1.6.5) (2022-07-10)
+
+
+### Bug Fixes
+
+* **ci:** bump version ([b32523d](https://github.com/sawhney17/logseq-citation-manager/commit/b32523de8663a1b6018c31387badbb1b1b5434f3))
+* **parser:** refactor parser ([a5ebc9b](https://github.com/sawhney17/logseq-citation-manager/commit/a5ebc9baa839bb67d2e05a48927b3b48f9c0f14b))
+
 ## [1.6.4](https://github.com/sawhney17/logseq-citation-manager/compare/v1.6.3...v1.6.4) (2022-07-09)
 
 
