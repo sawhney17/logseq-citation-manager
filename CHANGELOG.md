@@ -1,3 +1,15 @@
+# [1.7.0](https://github.com/sawhney17/logseq-citation-manager/compare/v1.6.8...v1.7.0) (2022-07-11)
+
+
+### Bug Fixes
+
+* **searchbar:** frozen exports ([74ca2b2](https://github.com/sawhney17/logseq-citation-manager/commit/74ca2b2b5ee3d65e026997ba540457f0f084e77c))
+
+
+### Features
+
+* **parser:** update regex support multiple fields ([7179e2d](https://github.com/sawhney17/logseq-citation-manager/commit/7179e2d6ea1e902c76c9af232c598aa68536acdb))
+
 ## [1.6.8](https://github.com/sawhney17/logseq-citation-manager/compare/v1.6.7...v1.6.8) (2022-07-11)
 
 
