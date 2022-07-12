@@ -118,7 +118,7 @@ const settings: SettingSchemaDesc[] = [
     description:
       "This settings controls the maximum number of results returned by a query. If you find yourself frequently scrolling the matches, you may want to increase this, otherwise you can decrease this.",
     type: "number",
-    default: 100,
+    default: 50,
   },
 ];
 
