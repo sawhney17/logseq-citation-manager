@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/sawhney17/logseq-citation-manager/compare/v1.8.0...v1.8.1) (2022-07-12)
+
+
+### Performance Improvements
+
+* **search:** Massively improve search performance ([4c8431c](https://github.com/sawhney17/logseq-citation-manager/commit/4c8431cf7ba5beecdea39cc90aece912fbdabee6))
+
 # [1.8.0](https://github.com/sawhney17/logseq-citation-manager/compare/v1.7.0...v1.8.0) (2022-07-11)
 
 
