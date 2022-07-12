@@ -74,7 +74,7 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
   };
 
   React.useEffect(() => {
-    let results;
+    let results: Array<any>;
     updateTemplates();
     if (searchTerm != "") {
       if (!logseq.settings.smartsearch) {
@@ -100,6 +100,7 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
     } else {
       results = smartblocks;
     }
+    results.length = Math.min(results.length, logseq.settings.resultsCount || 100)
     setSearchResults(results);
   }, [searchTerm]);
   React.useEffect(() => {
@@ -255,6 +256,35 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
                   </li>
                 </div>
               ))}
+            {/* {searchResults.for((item, index) => (
+                <div
+                  id={item.key}
+                  onClick={() => {
+                    handleEnter(index);
+                  }}
+                  className="hover:bg-[#4c4c4c] p-2 rounded-lg flex flex-auto"
+                >
+                  <div className=" max-w-4">
+                    <div
+                      title="template"
+                      className="text-xs rounded border mr-2 px-1 w-5"
+                      onClick={() => {
+                        handleEnter(index);
+                      }}
+                    >
+                      C
+                    </div>
+                  </div>
+                  <li
+                    className="inline-block px-2 searchItem"
+                    onClick={() => {
+                      handleEnter(index);
+                    }}
+                  >
+                    {item.fields.title[0]}
+                  </li>
+                </div>
+              ))} */}
             </ul>
           </div>
         </div>

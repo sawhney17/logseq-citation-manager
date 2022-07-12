@@ -107,20 +107,30 @@ const settings: SettingSchemaDesc[] = [
   {
     key: "fileTemplate",
     title: "Template for File URLS",
-    description: "If a bibtex entry has a file associated with it, when you call {file++}, this template will be applied to each individual link. Use {fileLink} to refer to the link. You can use {title} and {key} as well. ",
+    description:
+      "If a bibtex entry has a file associated with it, when you call {file++}, this template will be applied to each individual link. Use {fileLink} to refer to the link. You can use {title} and {key} as well. ",
     default: "![{title}](file://{fileLink})",
-    type: "string"
-  }
+    type: "string",
+  },
+  {
+    key: "resultsCount",
+    title: "Number of results to be returned",
+    description:
+      "This settings controls the maximum number of results returned by a query. If you find yourself frequently scrolling the matches, you may want to increase this, otherwise you can decrease this.",
+    type: "number",
+    default: 100,
+  },
 ];
 
 const dispatchPaperpileParse = async (mode, uuid) => {
   if (!logseq.settings.reindexOnStartup) {
     if ((await logseq.FileStorage.hasItem("paperpileDB.json")) == true) {
-      // paperpileParsed = JSON.parse(
-      //   await logseq.FileStorage.getItem("paperpileDB.json")
-      // );
+      paperpileParsed = JSON.parse(
+        await logseq.FileStorage.getItem("paperpileDB.json")
+      );
     }
   }
+
   const block = await logseq.Editor.getBlock(uuid);
   if (paperpileParsed.length == 0) {
     logseq.UI.showMsg("No existing DB could be found, reloading DB...");
