@@ -29,7 +29,7 @@
 ## Zotero
 - If you use **Zotero** with [Better BibTeX]
   - Select a collection in Zotero's left sidebar that you want to export.
-  - Click `File` -> `Export library ...`. Select `Better BibLaTeX` or `Better CSL JSON` as the format. (We recommend using the BibLaTeX export unless you experience performance issues. The BibLaTeX format includes more information that you can reference from Obsidian, such as associated PDF attachments, but loads more slowly than the JSON export.)
+  - Click `File` -> `Export library ...`. Select `Better BibLaTeX` or `Better CSL JSON` as the format. (We recommend using the BibLaTeX export unless you experience performance issues. The BibLaTeX format includes more information that you can reference from logseq, such as associated PDF attachments, but loads more slowly than the JSON export.)
   - You can optionally choose "Keep updated" to automatically re-export the collection -- this is recommended!
 ## Configuration
 - This plugin has a variety of configuration options
