@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/sawhney17/logseq-citation-manager/compare/v1.7.0...v1.8.0) (2022-07-11)
+
+
+### Features
+
+* **pdf:** Support pdfs ([97698e5](https://github.com/sawhney17/logseq-citation-manager/commit/97698e59cf71e15a6eaf7519bbbc2ec93824511e))
+
 # [1.7.0](https://github.com/sawhney17/logseq-citation-manager/compare/v1.6.8...v1.7.0) (2022-07-11)
 
 
