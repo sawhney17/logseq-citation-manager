@@ -44,10 +44,6 @@ export const useSidebarVisible = () => {
 
 const parseTemplate = (text) => {
   var template = text;
-  console.log("repl2acements");
-  console.log(citeKey);
-  console.log(fields);
-  console.log(type);
   template = template.replaceAll("{citekey}", citeKey);
   template = template.replaceAll("{key}", citeKey);
   template = template.replaceAll("{type}", type);
@@ -85,9 +81,10 @@ const parseTemplate = (text) => {
         text +
         `${logseq.settings.fileTemplate
           .replaceAll(/{filelink}/gi, individualFile)
-          .replaceAll(/{citekey}/gi, citeKey)}`;
+          .replaceAll(/{citekey}/gi, citeKey)
+          .replaceAll(/filename/gi, individualFile.split("/")[-1])}`;
     });
-    return text
+    return text;
   });
   for (const key in fields) {
     if (fields.hasOwnProperty(key)) {
@@ -148,14 +145,22 @@ const createLiteratureNote = async (isNoteReference, originalContent, uuid) => {
   }
 };
 
-const insertLiteratureNoteInline = async (uuid) => {
+const insertLiteratureNoteInline = async (uuid, oc) => {
   const currentBlock = await logseq.Editor.getBlock(uuid);
   const blocks = await parseTemplateBlock();
   if (currentBlock != null) {
-    await logseq.Editor.insertBatchBlock(currentBlock.uuid, blocks, {
-      sibling: true,
-    });
+    if (blocks[0].children.length == 0) {
+      logseq.Editor.updateBlock(currentBlock.uuid, `${oc} ${blocks[0].content}`);
+    } else {
+      if (uuid != undefined && oc != undefined) {
+        logseq.Editor.updateBlock(uuid, oc);
+      }
+      await logseq.Editor.insertBatchBlock(currentBlock.uuid, blocks, {
+        sibling: true,
+      });
+    }
   }
+  
 };
 // , 1000);};
 //Dispatch document keydown event for teh tab key
@@ -174,10 +179,7 @@ export const actionRouter = (
   fields = note.fields;
 
   if (actionKey == "inline" || actionKey == 0) {
-    insertLiteratureNoteInline(uuid);
-    if (uuid != undefined && oc != undefined) {
-      logseq.Editor.updateBlock(uuid, oc);
-    }
+    insertLiteratureNoteInline(uuid, oc);
   }
 
   if (actionKey == "goToReference" || actionKey == 1) {
