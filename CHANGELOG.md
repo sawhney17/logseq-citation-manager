@@ -1,3 +1,10 @@
+## [1.8.2](https://github.com/sawhney17/logseq-citation-manager/compare/v1.8.1...v1.8.2) (2022-07-12)
+
+
+### Bug Fixes
+
+* **settings:** update default ([7db2cf4](https://github.com/sawhney17/logseq-citation-manager/commit/7db2cf4a5945485ef9ec351122529ab94ad7acce))
+
 ## [1.8.1](https://github.com/sawhney17/logseq-citation-manager/compare/v1.8.0...v1.8.1) (2022-07-12)
 
 
