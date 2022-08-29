@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/sawhney17/logseq-citation-manager/compare/v1.9.0...v2.0.0) (2022-08-29)
+
+
+### Bug Fixes
+
+* **extension:** Support new version ([5b19d10](https://github.com/sawhney17/logseq-citation-manager/commit/5b19d10212441700bc5b033727295d552e4fcd18))
+
+
+### BREAKING CHANGES
+
+* **extension:** You will have to readd your graph.
+
 # [1.9.0](https://github.com/sawhney17/logseq-citation-manager/compare/v1.8.2...v1.9.0) (2022-07-16)
 
 
