@@ -184,25 +184,32 @@ const showDB = (parsed, mode, uuid, oc) => {
 
 const getPaperPile = async () => {
   // ...
-  axios
-    .get(`file://${logseq.settings.citationReferenceDB}`)
-    .then(async (result) => {
-      paperpile = result.data;
-      if (logseq.settings.citationReferenceDB.endsWith(".json")) {
-        logseq.UI.showMsg("Sucessfully updated the DB with JSON");
-        paperpileParsed = JSON.parse(paperpile);
-      } else {
-        createDB();
-      }
-    })
-    .catch((err) => {
-      logseq.UI.showMsg(
-        "Whoops!, Something went wrong when fetching the citation DB. Please check the path and try again.",
-        "Error",
-        { timeout: 5 }
-      );
-      console.log(err);
-    });
+
+  if (await logseq.FileStorage.hasItem(`${logseq.settings.citationReferenceDB}`)){
+    paperpile = await logseq.FileStorage.getItem(`${logseq.settings.citationReferenceDB}`)
+    createDB();
+  }
+  // axios
+  //   .get(`file://${logseq.settings.citationReferenceDB}`)
+  //   .then(async (result) => {
+  //     console.log(result)
+  //     paperpile = result.data;
+  //     if (logseq.settings.citationReferenceDB.endsWith(".json")) {
+  //       logseq.UI.showMsg("Sucessfully updated the DB with JSON");
+  //       paperpileParsed = JSON.parse(paperpile);
+  //     } else {
+  //       createDB();
+  //     }
+  //   })
+  //   .catch((err) => {
+  //     logseq.UI.showMsg(
+  //       "Whoops!, Something went wrong when fetching the citation DB. Please check the path and try again.",
+  //       "Error",
+  //       { timeout: 5 }
+  //     );
+  //     console.log(err);
+  //   });
+  // logseq.FileStorage.getItem
 };
 logseq.useSettingsSchema(settings);
 function main() {

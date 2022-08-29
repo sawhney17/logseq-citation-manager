@@ -147,18 +147,20 @@ const createLiteratureNote = async (isNoteReference, originalContent, uuid) => {
 
 const insertLiteratureNoteInline = async (uuid, oc) => {
   const currentBlock = await logseq.Editor.getBlock(uuid);
-  const blocks = await parseTemplateBlock();
+  let blocks = await parseTemplateBlock();
   if (currentBlock != null) {
     if (blocks[0].children.length == 0) {
-      logseq.Editor.updateBlock(currentBlock.uuid, `${oc} ${blocks[0].content}`);
+      // logseq.Editor.updateBlock(currentBlock.uuid, `${oc} ${blocks[0].content}`);
+      logseq.Editor.insertAtEditingCursor(`${blocks[0].content}`)
+      blocks.shift()
     } else {
       if (uuid != undefined && oc != undefined) {
         logseq.Editor.updateBlock(uuid, oc);
       }
-      await logseq.Editor.insertBatchBlock(currentBlock.uuid, blocks, {
-        sibling: true,
-      });
     }
+    await logseq.Editor.insertBatchBlock(currentBlock.uuid, blocks, {
+      sibling: true,
+    });
   }
   
 };
