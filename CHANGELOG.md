@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/sawhney17/logseq-citation-manager/compare/v1.8.2...v1.9.0) (2022-07-16)
+
+
+### Features
+
+* **inline:** truly insert inline ([e94d404](https://github.com/sawhney17/logseq-citation-manager/commit/e94d404df7966c51820592e52b7a720c23c77104))
+
 ## [1.8.2](https://github.com/sawhney17/logseq-citation-manager/compare/v1.8.1...v1.8.2) (2022-07-12)
 
 
