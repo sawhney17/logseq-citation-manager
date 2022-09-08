@@ -148,21 +148,41 @@ const createLiteratureNote = async (isNoteReference, originalContent, uuid) => {
 const insertLiteratureNoteInline = async (uuid, oc) => {
   const currentBlock = await logseq.Editor.getBlock(uuid);
   let blocks = await parseTemplateBlock();
-  if (currentBlock != null) {
-    if (blocks[0].children.length == 0) {
-      // logseq.Editor.updateBlock(currentBlock.uuid, `${oc} ${blocks[0].content}`);
-      logseq.Editor.insertAtEditingCursor(`${blocks[0].content}`)
-      blocks.shift()
+  logseq.Editor.updateBlock(uuid, oc);
+  console.log("bahhh")
+  console.log(blocks)
+  if (blocks[0].children.length == 0) {
+    console.log("NO children")
+    if (currentBlock != null) {
+      logseq.Editor.updateBlock(
+        currentBlock.uuid,
+        `${oc} ${blocks[0].content}`
+      ).then(() => {
+        // logseq.Editor.insertAtEditingCursor(`${blocks[0].content}`);
+      });
+      blocks.shift();
     } else {
       if (uuid != undefined && oc != undefined) {
-        logseq.Editor.updateBlock(uuid, oc);
+        console.log(oc);
       }
     }
     await logseq.Editor.insertBatchBlock(currentBlock.uuid, blocks, {
       sibling: true,
     });
   }
-  
+  else {
+    console.log(blocks)
+    console.log("Wha'ts up")
+    logseq.Editor.updateBlock(
+      currentBlock.uuid,
+      `${oc} ${blocks[0].content}`
+    ).then(() => {
+      // logseq.Editor.insertAtEditingCursor(`${blocks[0].content}`);
+    });
+    await logseq.Editor.insertBatchBlock(currentBlock.uuid, blocks[0].children, {
+      sibling: false,
+    });
+  }
 };
 // , 1000);};
 //Dispatch document keydown event for teh tab key
