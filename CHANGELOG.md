@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/sawhney17/logseq-citation-manager/compare/v2.0.0...v2.0.1) (2022-09-08)
+
+
+### Bug Fixes
+
+* **issues:** fix [#37](https://github.com/sawhney17/logseq-citation-manager/issues/37) fix [#36](https://github.com/sawhney17/logseq-citation-manager/issues/36) fix [#35](https://github.com/sawhney17/logseq-citation-manager/issues/35) ([0186481](https://github.com/sawhney17/logseq-citation-manager/commit/0186481c1d588aa7a627d3bee2d620577c6a3418))
+
 # [2.0.0](https://github.com/sawhney17/logseq-citation-manager/compare/v1.9.0...v2.0.0) (2022-08-29)
 
 
