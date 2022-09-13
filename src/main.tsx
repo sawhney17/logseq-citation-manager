@@ -213,6 +213,7 @@ const getPaperPile = async () => {
 };
 logseq.useSettingsSchema(settings);
 function main() {
+  logseq.FileStorage.setItem('test', 'test')
   logseq.setMainUIInlineStyle({
     zIndex: 11,
   });
