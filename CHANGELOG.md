@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/sawhney17/logseq-citation-manager/compare/v2.0.1...v2.0.2) (2022-09-13)
+
+
+### Bug Fixes
+
+* **storage:** Create directory on install ([dd49c17](https://github.com/sawhney17/logseq-citation-manager/commit/dd49c172e729f18cd800aac30201a41e97e8615f))
+
 ## [2.0.1](https://github.com/sawhney17/logseq-citation-manager/compare/v2.0.0...v2.0.1) (2022-09-08)
 
 
