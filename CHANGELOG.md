@@ -1,3 +1,10 @@
+## [2.0.3](https://github.com/sawhney17/logseq-citation-manager/compare/v2.0.2...v2.0.3) (2022-10-01)
+
+
+### Bug Fixes
+
+* **debug:** Add better error catching ([a4a1c29](https://github.com/sawhney17/logseq-citation-manager/commit/a4a1c29b6dd723b42506c0b04350e596bfd8b31a))
+
 ## [2.0.2](https://github.com/sawhney17/logseq-citation-manager/compare/v2.0.1...v2.0.2) (2022-09-13)
 
 
