@@ -151,6 +151,9 @@ const insertLiteratureNoteInline = async (uuid, oc) => {
   logseq.Editor.updateBlock(uuid, oc);
   console.log("bahhh")
   console.log(blocks)
+  if (blocks = null){
+    return
+  }
   if (blocks[0].children.length == 0) {
     console.log("NO children")
     if (currentBlock != null) {
@@ -219,6 +222,10 @@ const parseTemplatePage = async () => {
     logseq.settings.templatePage
   );
   data = initialPage;
+  if (initialPage == null) {
+    logseq.UI.showMsg("Error: Template page not found.")
+    return null
+  }
   data.forEach((item) => {
     triggerParse(item);
   });
@@ -229,11 +236,17 @@ const parseTemplateBlock = async () => {
   var initialBlock: BlockEntity[] = await logseq.DB.q(
     `(property template ${logseq.settings.templateBlock})`
   );
-  data = await logseq.Editor.getBlock(initialBlock[0].uuid, {
-    includeChildren: true,
-  });
-  triggerParse(data);
-  return data.children;
+  if (initialBlock!= null) {
+    data = await logseq.Editor.getBlock(initialBlock[0].uuid, {
+      includeChildren: true,
+    });
+    triggerParse(data);
+    return data.children;
+  }
+  else {
+    logseq.UI.showMsg("Error: Template block not found.")
+    return null
+  }
 };
 function triggerParse(block: BlockEntity) {
   if (block.content) {
