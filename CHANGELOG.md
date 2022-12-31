@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/sawhney17/logseq-citation-manager/compare/v2.0.3...v2.1.0) (2022-12-31)
+
+
+### Features
+
+* **shortcuts:** customizable shortcuts ([fcfdb00](https://github.com/sawhney17/logseq-citation-manager/commit/fcfdb00e75363d2b28fbc625f5968a4fe1b80958))
+
 ## [2.0.3](https://github.com/sawhney17/logseq-citation-manager/compare/v2.0.2...v2.0.3) (2022-10-01)
 
 
