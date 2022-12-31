@@ -10,7 +10,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@logseq/libs": "^0.0.6",
+    "@logseq/libs": "^0.0.14",
     "@retorquere/bibtex-parser": "^6.3.3",
     "axios": "^0.27.1",
     "minisearch": "^4.0.3",

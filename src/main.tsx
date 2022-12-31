@@ -41,6 +41,39 @@ export var paperpile = "";
 export var paperpileParsed = [];
 const pluginId = PL.id;
 const settings: SettingSchemaDesc[] = [
+  // @ts-expect-error
+  {
+    key: "bannerHeading",
+    title: "Shortcut Settings",
+    type: "heading",
+  },
+  {
+    key: "openAsPage",
+    title: "Search and open reference as page",
+    description: "Shortcut to search and open reference as page",
+    default: "mod+shift+o",
+    type: "string",
+  },
+  {
+    key: "inlineLitNoteLink",
+    title: "Insert inline literature note link",
+    description: "Shortcut to insert inline link to literature note",
+    default: "mod+shift+i",
+    type: "string",
+  },
+  {
+   key: "insertInline", 
+    title: "Insert inline literature note",
+    description: "Shortcut to insert inline literature note",
+    default: "mod+shift+l",
+    type: "string",
+  },
+  // @ts-expect-error
+  {
+    key: "bannerHeading",
+    title: "Other settings",
+    type: "heading"
+  },
   {
     key: "citationReferenceDB",
     title: "Path to Citation DB",
@@ -185,8 +218,12 @@ const showDB = (parsed, mode, uuid, oc) => {
 const getPaperPile = async () => {
   // ...
 
-  if (await logseq.FileStorage.hasItem(`${logseq.settings.citationReferenceDB}`)){
-    paperpile = await logseq.FileStorage.getItem(`${logseq.settings.citationReferenceDB}`)
+  if (
+    await logseq.FileStorage.hasItem(`${logseq.settings.citationReferenceDB}`)
+  ) {
+    paperpile = await logseq.FileStorage.getItem(
+      `${logseq.settings.citationReferenceDB}`
+    );
     createDB();
   }
   // axios
@@ -213,17 +250,18 @@ const getPaperPile = async () => {
 };
 logseq.useSettingsSchema(settings);
 function main() {
-  logseq.FileStorage.setItem('test', 'test')
+  logseq.FileStorage.setItem("test", "test");
   logseq.setMainUIInlineStyle({
     zIndex: 11,
   });
 
+  
   logseq.App.registerCommand(
     "openAsPage",
     {
       key: "openedLitNote",
       label: "Search and open reference as page",
-      keybinding: { binding: "mod+shift+o" },
+      keybinding: { binding: logseq.settings.openAsPage },
     },
     (e) => {
       dispatchPaperpileParse(1, e.uuid);
@@ -234,7 +272,7 @@ function main() {
     {
       key: "inlineLitNote",
       label: "Create Inline Link to Lit Note",
-      keybinding: { binding: "mod+shift+l" },
+      keybinding: { binding: logseq.settings.inlineLitNoteLink },
     },
     (e) => {
       dispatchPaperpileParse(2, e.uuid);
@@ -245,7 +283,7 @@ function main() {
     {
       key: "inlineNote",
       label: "Create Inline Note",
-      keybinding: { binding: "mod+shift+i" },
+      keybinding: { binding: logseq.settings.insertInline },
     },
     (e) => {
       dispatchPaperpileParse(0, e.uuid);
