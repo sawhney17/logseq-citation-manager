@@ -58,22 +58,14 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
                 title: item.fields.title[0],
                 citekey: item.key,
                 // All authors joined into a single string
-                authors: item.fields.author
-                  .map((author) => {
-                    return author.literal;
-                  })
-                  .join(", "),
+                authors: item.fields.author.toString().toLowerCase().replaceAll(/,/g, ""),
                 abstract: item.fields.abstract,
               };
             } else {
               pair = {
                 title: item.fields.title[0],
                 // All authors joined into a single string
-                authors: item.fields.author
-                  .map((author) => {
-                    return author.literal;
-                  })
-                  .join(", "),
+                authors: item.fields.author.toString().toLowerCase().replaceAll(/,/g, ""),
                 citekey: item.key,
               };
             }
@@ -94,7 +86,10 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
       if (!logseq.settings.smartsearch) {
         results = smartblocks.filter((template) => {
           if (template.fields.title[0] != undefined) {
-            return template.fields.title[0].toLowerCase().includes(searchTerm);
+            return (
+              template.fields.title[0].toLowerCase() +
+              template.fields.author.toString().toLowerCase().replaceAll(/,/g, "")
+            ).includes(searchTerm);
           }
         });
       } else {
@@ -114,7 +109,10 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
     } else {
       results = smartblocks;
     }
-    results.length = Math.min(results.length, logseq.settings.resultsCount || 100)
+    results.length = Math.min(
+      results.length,
+      logseq.settings.resultsCount || 100
+    );
     setSearchResults(results);
   }, [searchTerm]);
   React.useEffect(() => {
@@ -136,9 +134,9 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
   }, [highlightedResult]);
 
   const handleEnter = (index = null) => {
-    console.log(shouldEditAgain())
+    console.log(shouldEditAgain());
     if (shouldEditAgain()) {
-      setEditAgain()
+      setEditAgain();
       const resultKey = index == null ? highlightedResult : index;
       if (resultKey != null) {
         let citationDetails = searchRef.current[resultKey];
@@ -270,7 +268,7 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
                   </li>
                 </div>
               ))}
-            {/* {searchResults.for((item, index) => (
+              {/* {searchResults.for((item, index) => (
                 <div
                   id={item.key}
                   onClick={() => {
