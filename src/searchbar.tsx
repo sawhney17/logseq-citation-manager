@@ -265,6 +265,7 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
                     }}
                   >
                     {item.fields.title[0]}
+                    <div><i>{item.fields.author.toString()}</i></div>
                   </li>
                 </div>
               ))}
