@@ -20,6 +20,8 @@ interface cachedBlock {
 }
 
 var editAgain = true;
+  const storageBucket = logseq.Assets.makeSandboxStorage()
+
 
 export const shouldEditAgain = () => {
   return editAgain;
@@ -157,9 +159,9 @@ const settings: SettingSchemaDesc[] = [
 
 const dispatchPaperpileParse = async (mode, uuid) => {
   if (!logseq.settings.reindexOnStartup) {
-    if ((await logseq.FileStorage.hasItem("paperpileDB.json")) == true) {
+    if ((await storageBucket.hasItem("paperpileDB.json")) == true) {
       paperpileParsed = JSON.parse(
-        await logseq.FileStorage.getItem("paperpileDB.json")
+        await storageBucket.getItem("paperpileDB.json")
       );
     }
   }
@@ -185,7 +187,7 @@ const createDB = () => {
   ) as BibTeXParser.Bibliography;
 
   paperpileParsed = parsed.entries;
-  logseq.FileStorage.setItem(
+  storageBucket.setItem(
     "paperpileDB.json",
     JSON.stringify(paperpileParsed)
   );
@@ -219,9 +221,9 @@ const getPaperPile = async () => {
   // ...
 
   if (
-    await logseq.FileStorage.hasItem(`${logseq.settings.citationReferenceDB}`)
+    await storageBucket.hasItem(`${logseq.settings.citationReferenceDB}`)
   ) {
-    paperpile = await logseq.FileStorage.getItem(
+    paperpile = await storageBucket.getItem(
       `${logseq.settings.citationReferenceDB}`
     );
     createDB();
@@ -246,11 +248,11 @@ const getPaperPile = async () => {
   //     );
   //     console.log(err);
   //   });
-  // logseq.FileStorage.getItem
+  // storageBucket.getItem
 };
 logseq.useSettingsSchema(settings);
 function main() {
-  logseq.FileStorage.setItem("test", "test");
+  storageBucket.setItem("test", "test");
   logseq.setMainUIInlineStyle({
     zIndex: 11,
   });
