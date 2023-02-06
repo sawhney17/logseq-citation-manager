@@ -1,3 +1,15 @@
+# [3.0.0](https://github.com/sawhney17/logseq-citation-manager/compare/v2.3.0...v3.0.0) (2023-02-06)
+
+
+### Features
+
+* **db:** Breaking change  Assets API for database ([8ad9091](https://github.com/sawhney17/logseq-citation-manager/commit/8ad90910a441df4aca54f15741316037ef5a3d64))
+
+
+### BREAKING CHANGES
+
+* **db:** Databases NEED to be reconfigured
+
 # [2.3.0](https://github.com/sawhney17/logseq-citation-manager/compare/v2.2.0...v2.3.0) (2023-02-06)
 
 
