@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/sawhney17/logseq-citation-manager/compare/v2.2.0...v2.3.0) (2023-02-06)
+
+
+### Features
+
+* **search:** Show the author  in the search bar ([7465085](https://github.com/sawhney17/logseq-citation-manager/commit/74650852413fb9b1a537459c3aea7f0673820bbb))
+
 # [2.2.0](https://github.com/sawhney17/logseq-citation-manager/compare/v2.1.0...v2.2.0) (2023-02-06)
 
 
