@@ -56,11 +56,25 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
             if (logseq.settings.indexAbstract) {
               pair = {
                 title: item.fields.title[0],
+                citekey: item.key,
+                // All authors joined into a single string
+                authors: item.fields.author
+                  .map((author) => {
+                    return author.literal;
+                  })
+                  .join(", "),
                 abstract: item.fields.abstract,
               };
             } else {
               pair = {
                 title: item.fields.title[0],
+                // All authors joined into a single string
+                authors: item.fields.author
+                  .map((author) => {
+                    return author.literal;
+                  })
+                  .join(", "),
+                citekey: item.key,
               };
             }
             return { ...pair, ...item };
@@ -85,7 +99,7 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
         });
       } else {
         let miniSearch = new MiniSearch({
-          fields: ["title", "abstract"], // fields to index for full-text search
+          fields: ["title", "abstract", "citekey"], // fields to index for full-text search
           storeFields: ["key", "fields", "type"], // fields to return with search results
           idField: "key",
           searchOptions: {
