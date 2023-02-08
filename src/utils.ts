@@ -151,7 +151,7 @@ const insertLiteratureNoteInline = async (uuid, oc) => {
   logseq.Editor.updateBlock(uuid, oc);
   console.log("bahhh")
   console.log(blocks)
-  if (blocks = null){
+  if (blocks == null){
     return
   }
   if (blocks[0].children.length == 0) {
