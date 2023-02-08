@@ -1,3 +1,10 @@
+## [3.0.3](https://github.com/sawhney17/logseq-citation-manager/compare/v3.0.2...v3.0.3) (2023-02-08)
+
+
+### Bug Fixes
+
+* **database:** error message ([13c4b92](https://github.com/sawhney17/logseq-citation-manager/commit/13c4b92271ef29ec3f74317466c9991cc4867fff))
+
 ## [3.0.2](https://github.com/sawhney17/logseq-citation-manager/compare/v3.0.1...v3.0.2) (2023-02-08)
 
 
