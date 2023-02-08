@@ -186,6 +186,7 @@ const createDB = () => {
     options
   ) as BibTeXParser.Bibliography;
 
+
   paperpileParsed = parsed.entries;
   storageBucket.setItem(
     "paperpileDB.json",
@@ -227,6 +228,13 @@ const getPaperPile = async () => {
       `${logseq.settings.citationReferenceDB}`
     );
     createDB();
+  }
+  else {
+    logseq.UI.showMsg(
+      "Whoops!, Something went wrong when fetching the citation DB. Please check the path and try again. Make sure your database is in the assets folder.",
+      "Error",
+      { timeout: 5 }
+    );
   }
   // axios
   //   .get(`file://${logseq.settings.citationReferenceDB}`)
