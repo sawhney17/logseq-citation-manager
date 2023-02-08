@@ -163,11 +163,6 @@ const dispatchPaperpileParse = async (mode, uuid) => {
         await storageBucket.getItem("paperpileDB.json")
       );
     }
-    else if (await logseq.FileStorage.hasItem("paperpileDB.json") == true) {
-      paperpileParsed = JSON.parse(
-        await logseq.FileStorage.getItem("paperpileDB.json")
-      );
-    }
   }
 
   const block = await logseq.Editor.getBlock(uuid);
