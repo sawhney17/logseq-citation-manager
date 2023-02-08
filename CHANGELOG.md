@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/sawhney17/logseq-citation-manager/compare/v3.0.0...v3.0.1) (2023-02-08)
+
+
+### Bug Fixes
+
+* **error handling:** Add fallback database [#53](https://github.com/sawhney17/logseq-citation-manager/issues/53) ([631192c](https://github.com/sawhney17/logseq-citation-manager/commit/631192c9d57ad95301868e0726c21bc7fe25f78b))
+
 # [3.0.0](https://github.com/sawhney17/logseq-citation-manager/compare/v2.3.0...v3.0.0) (2023-02-06)
 
 
