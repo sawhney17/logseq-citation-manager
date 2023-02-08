@@ -1,3 +1,10 @@
+## [3.0.2](https://github.com/sawhney17/logseq-citation-manager/compare/v3.0.1...v3.0.2) (2023-02-08)
+
+
+### Bug Fixes
+
+* **database:** broken database error [#55](https://github.com/sawhney17/logseq-citation-manager/issues/55) ([6f7e3da](https://github.com/sawhney17/logseq-citation-manager/commit/6f7e3dada279644d99ea8ba8322966e0d554d7e9))
+
 ## [3.0.1](https://github.com/sawhney17/logseq-citation-manager/compare/v3.0.0...v3.0.1) (2023-02-08)
 
 
