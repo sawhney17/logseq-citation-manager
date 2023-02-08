@@ -228,13 +228,8 @@ const getPaperPile = async () => {
       `${logseq.settings.citationReferenceDB}`
     );
     createDB();
-  } else {
-    if (await logseq.FileStorage.hasItem(`${logseq.settings.citationReferenceDB}`)) {
-      paperpile = await logseq.FileStorage.getItem(
-        `${logseq.settings.citationReferenceDB}`
-      );
-      createDB(true);
-    }
+  }
+  else {
     logseq.UI.showMsg(
       "Whoops!, Something went wrong when fetching the citation DB. Please check the path and try again. Make sure your database is in the assets folder.",
       "Error",
