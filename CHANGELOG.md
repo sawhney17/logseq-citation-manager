@@ -1,3 +1,10 @@
+## [3.0.4](https://github.com/sawhney17/logseq-citation-manager/compare/v3.0.3...v3.0.4) (2023-02-08)
+
+
+### Bug Fixes
+
+* **bug:** the stupidest error ever [#53](https://github.com/sawhney17/logseq-citation-manager/issues/53) ([856662f](https://github.com/sawhney17/logseq-citation-manager/commit/856662f3568d47d6818ba1ef058f0b16039f780e))
+
 ## [3.0.3](https://github.com/sawhney17/logseq-citation-manager/compare/v3.0.2...v3.0.3) (2023-02-08)
 
 
