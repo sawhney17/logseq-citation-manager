@@ -20,8 +20,7 @@ interface cachedBlock {
 }
 
 var editAgain = true;
-  const storageBucket = logseq.Assets.makeSandboxStorage()
-
+const storageBucket = logseq.Assets.makeSandboxStorage();
 
 export const shouldEditAgain = () => {
   return editAgain;
@@ -64,7 +63,7 @@ const settings: SettingSchemaDesc[] = [
     type: "string",
   },
   {
-   key: "insertInline", 
+    key: "insertInline",
     title: "Insert inline literature note",
     description: "Shortcut to insert inline literature note",
     default: "mod+shift+l",
@@ -74,7 +73,7 @@ const settings: SettingSchemaDesc[] = [
   {
     key: "bannerHeading",
     title: "Other settings",
-    type: "heading"
+    type: "heading",
   },
   {
     key: "citationReferenceDB",
@@ -164,6 +163,11 @@ const dispatchPaperpileParse = async (mode, uuid) => {
         await storageBucket.getItem("paperpileDB.json")
       );
     }
+    else if (await logseq.FileStorage.hasItem("paperpileDB.json") == true) {
+      paperpileParsed = JSON.parse(
+        await logseq.FileStorage.getItem("paperpileDB.json")
+      );
+    }
   }
 
   const block = await logseq.Editor.getBlock(uuid);
@@ -175,7 +179,7 @@ const dispatchPaperpileParse = async (mode, uuid) => {
     showDB(paperpileParsed, mode, uuid, block.content);
   }
 };
-const createDB = () => {
+const createDB = (old = false) => {
   const options: BibTeXParser.ParserOptions = {
     errorHandler: (err) => {
       console.warn("Citation plugin: error loading BibLaTeX entry:", err);
@@ -186,12 +190,10 @@ const createDB = () => {
     options
   ) as BibTeXParser.Bibliography;
 
-
   paperpileParsed = parsed.entries;
-  storageBucket.setItem(
-    "paperpileDB.json",
-    JSON.stringify(paperpileParsed)
-  );
+
+  
+    storageBucket.setItem("paperpileDB.json", JSON.stringify(paperpileParsed));
 };
 
 const showDB = (parsed, mode, uuid, oc) => {
@@ -221,15 +223,18 @@ const showDB = (parsed, mode, uuid, oc) => {
 const getPaperPile = async () => {
   // ...
 
-  if (
-    await storageBucket.hasItem(`${logseq.settings.citationReferenceDB}`)
-  ) {
+  if (await storageBucket.hasItem(`${logseq.settings.citationReferenceDB}`)) {
     paperpile = await storageBucket.getItem(
       `${logseq.settings.citationReferenceDB}`
     );
     createDB();
-  }
-  else {
+  } else {
+    if (await logseq.FileStorage.hasItem(`${logseq.settings.citationReferenceDB}`)) {
+      paperpile = await logseq.FileStorage.getItem(
+        `${logseq.settings.citationReferenceDB}`
+      );
+      createDB(true);
+    }
     logseq.UI.showMsg(
       "Whoops!, Something went wrong when fetching the citation DB. Please check the path and try again. Make sure your database is in the assets folder.",
       "Error",
@@ -265,7 +270,6 @@ function main() {
     zIndex: 11,
   });
 
-  
   logseq.App.registerCommand(
     "openAsPage",
     {
