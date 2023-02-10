@@ -91,11 +91,11 @@ const settings: SettingSchemaDesc[] = [
     type: "boolean",
   },
   {
-    key: "indexAbstract",
+    key: "indexAbstracts",
     title: "Enable indexing abstract? (Can impact performance!))",
     description:
       "Would you like to to index abstract in search? This would mean that the search results are prioritized primarily by title, but the contents of the abstract is also taken into consideration.",
-    default: true,
+    default: false,
     type: "boolean",
   },
   {

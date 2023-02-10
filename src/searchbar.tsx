@@ -53,7 +53,7 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
         .map((item) => {
           try {
             let pair;
-            if (logseq.settings.indexAbstract) {
+            if (logseq.settings.indexAbstracts) {
               pair = {
                 title: item.fields.title[0],
                 citekey: item.key,
