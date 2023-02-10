@@ -40,7 +40,7 @@
 	- This path is the directory where your .bib database is located
 - `smartsearch`
 	- This is a toggle that allows you to use fuzzy search for the search, depends on your own use case and preference. 
-- `indexAbstract`
+- `indexAbstracts`
 	- This is a toggle that allows you to index the abstract of the reference in the search. This can make search results more relevant but is expensive from a performance perspective
 - `templatePage`
 	- This is the path to the page template that will be used to create pages for the references. Simply create a page and name it whatever you want. Type the name of the page here. The page can use dynamic variables like {type}, {author}, {citekey}, {author lastname}, {abstract} etc. 
