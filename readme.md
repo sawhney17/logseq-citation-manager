@@ -66,8 +66,7 @@
 		- {abstract}
 	```
 ## Credits
-- Development of this plugin has been financially supported by the Global Partnership Network at the University of Kassel
-
+- Development of this plugin has been financially supported by the [Global Partnership Network]( https://www.uni-kassel.de/forschung/global-partnership-network/home) at the University of Kassel
 - Credits to [Obsidian Citation Plugin](https://github.com/hans/obsidian-citation-plugin) for direct inspiration
 - Credits to [Kerim](https://github.com/kerim) for sponsoring and the idea for the plugin
 
