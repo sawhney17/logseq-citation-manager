@@ -1,3 +1,10 @@
+## [3.0.6](https://github.com/sawhney17/logseq-citation-manager/compare/v3.0.5...v3.0.6) (2023-02-10)
+
+
+### Bug Fixes
+
+* **search:** Fix case sensitive in non smartsearch ([e02468f](https://github.com/sawhney17/logseq-citation-manager/commit/e02468ffe1b841c3ae10b86036db3ddb3f3bcfff))
+
 ## [3.0.5](https://github.com/sawhney17/logseq-citation-manager/compare/v3.0.4...v3.0.5) (2023-02-10)
 
 
