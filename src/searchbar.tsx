@@ -89,7 +89,7 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
             return (
               template.fields.title[0].toLowerCase() +
               template.fields.author.toString().toLowerCase().replaceAll(/,/g, "")
-            ).includes(searchTerm);
+            ).includes(searchTerm.toLowerCase());
           }
         });
       } else {
