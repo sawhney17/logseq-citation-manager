@@ -1,3 +1,10 @@
+## [3.0.5](https://github.com/sawhney17/logseq-citation-manager/compare/v3.0.4...v3.0.5) (2023-02-10)
+
+
+### Bug Fixes
+
+* **smartsearch:** imrpove performance ([d54af7d](https://github.com/sawhney17/logseq-citation-manager/commit/d54af7db7f8a330095a1c5f99bdadab89dbd2b8c))
+
 ## [3.0.4](https://github.com/sawhney17/logseq-citation-manager/compare/v3.0.3...v3.0.4) (2023-02-08)
 
 
