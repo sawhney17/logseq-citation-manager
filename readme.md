@@ -41,7 +41,7 @@
 - `smartsearch`
 	- This is a toggle that allows you to use fuzzy search for the search, depends on your own use case and preference. 
 - `indexAbstracts`
-	- This is a toggle that allows you to index the abstract of the reference in the search. This can make search results more relevant but is expensive from a performance perspective
+	- This is a toggle that allows you to index the abstract of the reference in the search. This can make search results more relevant but can also slow down the search.
 - `templatePage`
 	- This is the path to the page template that will be used to create pages for the references. Simply create a page and name it whatever you want. Type the name of the page here. The page can use dynamic variables like {type}, {author}, {citekey}, {author lastname}, {abstract} etc. 
 	- When you create a page via a citation, the page will follow the template of the specified page and will automatically resolve the dynamic variables to it's actual values. You can use any field from the reference as a dynamic variable. 
