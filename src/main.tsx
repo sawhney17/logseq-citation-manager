@@ -4,6 +4,7 @@ import "virtual:windi.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
+import validator from "validator";
 import { logseq as PL } from "../package.json";
 import {
   BlockIdentity,
@@ -14,10 +15,19 @@ import SearchBar from "./searchbar";
 import { handleClosePopup } from "./handleClosePopup";
 const css = (t, ...args) => String.raw(t, ...args);
 
+// Pulled from https://thewebdev.info/2021/11/18/how-to-disable-browser-cache-with-javascript-axios/ 
+// Axios was using the cache so new copies of the database weren't pulling from the URL.
+axios.defaults.headers = {
+  "Cache-Control": "no-cache",
+  "Pragma": "no-cache",
+  "Expires": "0",
+};
+
 interface cachedBlock {
   uuid: BlockIdentity;
   originalContent: string;
 }
+const pluginId = PL.id;
 
 var editAgain = true;
 const storageBucket = logseq.Assets.makeSandboxStorage();
@@ -40,13 +50,12 @@ export var uuidOriginals = "";
 export var originalContentC = "";
 export var paperpile = "";
 export var paperpileParsed = [];
-const pluginId = PL.id;
 const settings: SettingSchemaDesc[] = [
-  // @ts-expect-error
   {
     key: "bannerHeading",
     title: "Shortcut Settings",
     type: "heading",
+    description: "",
   },
   {
     key: "openAsPage",
@@ -69,16 +78,16 @@ const settings: SettingSchemaDesc[] = [
     default: "mod+shift+l",
     type: "string",
   },
-  // @ts-expect-error
   {
     key: "bannerHeading",
     title: "Other settings",
     type: "heading",
+    description: "",
   },
   {
     key: "citationReferenceDB",
-    title: "Path to Citation DB",
-    description: "Enter the path your citation DB",
+    title: "Location of your BibTeX file",
+    description: `When using a **local BibTeX file**, provide the relative path from \`<path-to-graph>/assets/storages/${pluginId}\`. When using a **remote BibTeX file**, provide a complete URL with either a protocol of \`http://\` or \`https://\`.`,
     default: "path/to/citationDB.bib",
     type: "string",
   },
@@ -168,13 +177,14 @@ const dispatchPaperpileParse = async (mode, uuid) => {
   const block = await logseq.Editor.getBlock(uuid);
   if (paperpileParsed.length == 0) {
     logseq.UI.showMsg("No existing DB could be found, reloading DB...");
-    getPaperPile();
+    fetchDatabase();
   } else {
     logseq.Editor.updateBlock(uuid, `inserting...`);
     showDB(paperpileParsed, mode, uuid, block.content);
   }
 };
-const createDB = (old = false) => {
+  
+const createDB = async (old = false) => {
   const options: BibTeXParser.ParserOptions = {
     errorHandler: (err) => {
       console.warn("Citation plugin: error loading BibLaTeX entry:", err);
@@ -186,9 +196,8 @@ const createDB = (old = false) => {
   ) as BibTeXParser.Bibliography;
 
   paperpileParsed = parsed.entries;
-
   
-    storageBucket.setItem("paperpileDB.json", JSON.stringify(paperpileParsed));
+  await storageBucket.setItem("paperpileDB.json", JSON.stringify(paperpileParsed));
 };
 
 const showDB = (parsed, mode, uuid, oc) => {
@@ -215,45 +224,56 @@ const showDB = (parsed, mode, uuid, oc) => {
   handleClosePopup();
 };
 
-const getPaperPile = async () => {
-  // ...
+const fetchDatabase = async () => {
+  const dbPath = logseq.settings.citationReferenceDB;
+  const isURL = validator.isURL(dbPath, {
+      protocols: ["http", "https"],
+      require_tld: true,
+      require_valid_protocol: true,
+  }) 
 
-  if (await storageBucket.hasItem(`${logseq.settings.citationReferenceDB}`)) {
-    paperpile = await storageBucket.getItem(
-      `${logseq.settings.citationReferenceDB}`
-    );
-    createDB();
+  const graphPath = (await logseq.App.getCurrentGraph()).path
+  // TODO Ensure that `bucketPath` is printed respecting OS.
+  // TODO Get SandboxStorage path from Logseq rather than hard-coding...
+  const bucketPath = `${graphPath}/assets/storages/${pluginId}`;
+
+  let msgKey: string;
+  let errorMsg: string = `We could not find your reference BibTeX on your local disk. Please ensure that your BibTeX is in this folder: ${bucketPath}.`;
+  if (isURL) {
+      paperpile = await axios.get(dbPath)
+          .then(({ data }) => data)
+          .catch(({ response: { status }}) => {
+              errorMsg = `Failed to retrieve ${dbPath}.`
+              errorMsg += `We received an HTTP Code of ${status}.`
+              return null;
+          });
+      if (paperpile) {
+        msgKey = await logseq.UI.showMsg(
+          `Successfully retrieved ${dbPath} from the web.`,
+          "success",
+          { key: "get-paperpile", timeout: 0 },
+        )
+      }
+  } else if (await storageBucket.hasItem(dbPath)) {
+      paperpile = await storageBucket.getItem(dbPath);
+      msgKey = await logseq.UI.showMsg(
+        `Successfully retrieved ${dbPath} from local storage.`,
+        "success",
+        { key: "get-paperpile", timeout: 0 },
+      )
+  } else {
+      msgKey = await logseq.UI.showMsg(errorMsg, "error", {
+        key: "get-paperpile",
+        timeout: 0,
+      });
+      return
   }
-  else {
-    logseq.UI.showMsg(
-      "Whoops!, Something went wrong when fetching the citation DB. Please check the path and try again. Make sure your database is in the assets folder.",
-      "Error",
-      { timeout: 5 }
-    );
-  }
-  // axios
-  //   .get(`file://${logseq.settings.citationReferenceDB}`)
-  //   .then(async (result) => {
-  //     console.log(result)
-  //     paperpile = result.data;
-  //     if (logseq.settings.citationReferenceDB.endsWith(".json")) {
-  //       logseq.UI.showMsg("Sucessfully updated the DB with JSON");
-  //       paperpileParsed = JSON.parse(paperpile);
-  //     } else {
-  //       createDB();
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     logseq.UI.showMsg(
-  //       "Whoops!, Something went wrong when fetching the citation DB. Please check the path and try again.",
-  //       "Error",
-  //       { timeout: 5 }
-  //     );
-  //     console.log(err);
-  //   });
-  // storageBucket.getItem
-};
+
+  await createDB();
+}
+
 logseq.useSettingsSchema(settings);
+
 function main() {
   storageBucket.setItem("test", "test");
   logseq.setMainUIInlineStyle({
@@ -300,7 +320,7 @@ function main() {
         "Reindex the citation DB in case you made changes to your .bib files",
     },
     (e) => {
-      getPaperPile();
+      fetchDatabase();
     }
   );
   logseq.Editor.registerSlashCommand(
