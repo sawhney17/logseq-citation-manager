@@ -2,7 +2,7 @@
 # Logseq Citations Plugin
 
 ## BREAKING CHANGE in 3.0.0
-- Version 3.0.0 had a breaking change. You will have to reconfigure the .bib export. It now has to be located in assets/storage/logseq-citation-manager in settings, you just give the filename with extension(like starred-items.bib), no need for the file path.
+- Version 3.0.0 had a breaking change. You will have to reconfigure the `.bib` export. It now has to be located in `~assets/storages/logseq-citation-manager` in settings, you just give the filename with extension(like `starred-items.bib`), no need for the file path.
 
 ## Installation
 - This plugin can be installed from the Logseq marketplace
@@ -66,8 +66,7 @@
 		- {abstract}
 	```
 ## Credits
-- Development of this plugin has been financially supported by the Global Partnership Network at the University of Kassel
-
+- Development of this plugin has been financially supported by the [Global Partnership Network]( https://www.uni-kassel.de/forschung/global-partnership-network/home) at the University of Kassel
 - Credits to [Obsidian Citation Plugin](https://github.com/hans/obsidian-citation-plugin) for direct inspiration
 - Credits to [Kerim](https://github.com/kerim) for sponsoring and the idea for the plugin
 
