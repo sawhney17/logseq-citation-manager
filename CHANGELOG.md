@@ -1,3 +1,10 @@
+# [3.1.0](https://github.com/sawhney17/logseq-citation-manager/compare/v3.0.6...v3.1.0) (2023-10-17)
+
+
+### Features
+
+* **search:** add the year as a field ([e99a617](https://github.com/sawhney17/logseq-citation-manager/commit/e99a6177469afdd341c03452004e9ec6daece12c))
+
 ## [3.0.6](https://github.com/sawhney17/logseq-citation-manager/compare/v3.0.5...v3.0.6) (2023-02-10)
 
 
