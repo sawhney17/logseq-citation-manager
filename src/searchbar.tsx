@@ -94,7 +94,7 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
         });
       } else {
         let miniSearch = new MiniSearch({
-          fields: ["title", "abstract", "citekey"], // fields to index for full-text search
+          fields: ["title", "abstract", "citekey", "year"], // fields to index for full-text search
           storeFields: ["key", "fields", "type"], // fields to return with search results
           idField: "key",
           searchOptions: {
