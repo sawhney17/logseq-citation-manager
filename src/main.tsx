@@ -77,9 +77,9 @@ const settings: SettingSchemaDesc[] = [
   },
   {
     key: "citationReferenceDB",
-    title: "Path to Citation DB",
-    description: "Enter the path your citation DB",
-    default: "path/to/citationDB.bib",
+    title: "Citation DB Name",
+    description: "Enter the name of the citation DB. For instructions on how to handle this, check the readme: https://github.com/sawhney17/logseq-citation-manager",
+    default: "citationDB.bib",
     type: "string",
   },
   {
