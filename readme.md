@@ -3,6 +3,7 @@
 
 ## BREAKING CHANGE in 3.0.0
 - Version 3.0.0 had a breaking change. You will have to reconfigure the `.bib` export. It now has to be located in `~assets/storages/logseq-citation-manager` in settings, you just give the filename with extension(like `starred-items.bib`), no need for the file path.
+- `~assets` refers to the folder that your database includes by default. 
 
 ## Installation
 - This plugin can be installed from the Logseq marketplace
