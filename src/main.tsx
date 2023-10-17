@@ -110,7 +110,7 @@ const settings: SettingSchemaDesc[] = [
     key: "templateBlock",
     title: "Template Block",
     description:
-      "Enter the name of the template block, use logseq's in built template feature or smartblocks. On inserting inline references, this block's template will be followed. You can use {author}, {title}, {journal}, {year}, {volume}, {number}, {pages}, {doi}, {url} as placeholders",
+      "Enter the name of the template block, use logseq's in built template feature or smartblocks. To create a template, right click and select make template or use instructions in the smartblocks repo. On inserting inline references, this block's template will be followed. You can use {author}, {title}, {journal}, {year}, {volume}, {number}, {pages}, {doi}, {url} as placeholders",
     default: "",
     type: "string",
   },
