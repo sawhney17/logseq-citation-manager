@@ -66,6 +66,23 @@
 	- {title} by {author}
 		- {abstract}
 	```
+## Dynamic placeholders
+- Any field that is stored in bibtex file can be extracted and be used in a tempalate
+- For example, using {title} will result in the title being replaced dynamically when calling the template
+- Here is a non exhaustive list of dynamic placeholders as well as special placeholders that perform additional functionality
+- {year}
+	- The year in the form of 2017
+- {file++}
+    -  Uses the filetemplate format to add *all file attachments in the form of a link for example* 
+	- This template supports more fields like {filelink}, {filename} and {citekey}
+- {type}
+	- the type of file it is(article, book etc.)
+- {author}
+	- The author of the source
+- {author lastname}
+	- The lastname of the author of the source
+- {author firstname}
+	- The firstname of the author of the source
 ## Credits
 - Development of this plugin has been financially supported by the [Global Partnership Network]( https://www.uni-kassel.de/forschung/global-partnership-network/home) at the University of Kassel
 - Credits to [Obsidian Citation Plugin](https://github.com/hans/obsidian-citation-plugin) for direct inspiration
