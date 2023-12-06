@@ -9,4 +9,4 @@ icon:: 📚
 - Abstract:
 	- {abstract}
 - Notes
-	- 
+	- {notes+}

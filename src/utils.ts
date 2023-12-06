@@ -47,6 +47,7 @@ const parseTemplate = (text) => {
   template = template.replaceAll("{citekey}", citeKey);
   template = template.replaceAll("{key}", citeKey);
   template = template.replaceAll("{type}", type);
+  template = template.replaceAll("{notes+}", fields.annote)
   console.log(template);
   try {
     template = template.replaceAll(
