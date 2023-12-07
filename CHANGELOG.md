@@ -1,3 +1,10 @@
+# [3.2.0](https://github.com/sawhney17/logseq-citation-manager/compare/v3.1.0...v3.2.0) (2023-12-07)
+
+
+### Features
+
+* **templating:** add notes ([74d4f14](https://github.com/sawhney17/logseq-citation-manager/commit/74d4f149c26c110faa8a860e3bcc957428a91ab1))
+
 # [3.1.0](https://github.com/sawhney17/logseq-citation-manager/compare/v3.0.6...v3.1.0) (2023-10-17)
 
 
