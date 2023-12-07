@@ -28,7 +28,7 @@
 
 
 ## Paperpile
-- For usage with paperpile, create a synced export to the .bib format
+- For usage with Paperpile, create a synced export to the .bib format
 - Use a sync provider to make it persist on desktop
 ## Zotero
 - If you use **Zotero** with [Better BibTeX]
