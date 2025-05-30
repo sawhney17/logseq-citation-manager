@@ -11,6 +11,7 @@
 - Supports customisable page and block templates
 - Supports embedding and linking to Bibtex items in the form of pages *and* links
 - Supports Zotero, Paperpile and other applications with supports for .bib references
+- Support JabRef, instructions with settings for using JabRef can be found [here](https://github.com/sawhney17/logseq-citation-manager/pull/73). Credits @ehehela
 - Supports aliases for the links to the reference
 - 100% local
 - Performant with over 6000 references!
