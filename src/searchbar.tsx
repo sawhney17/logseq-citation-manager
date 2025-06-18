@@ -58,7 +58,8 @@ const SearchBar: React.FC<{ paperpileParsed }> = (paperpileParsed, uuid) => {
                 title: item.fields.title[0],
                 citekey: item.key,
                 // All authors joined into a single string
-                authors: item.fields.author.toString().toLowerCase().replaceAll(/,/g, ""),
+                authors: item.fields.author?.length > 0 ? item.fields.author.toString().toLowerCase().replaceAll(/,/g, "") : (
+                  item.fields.editor?.length > 0 ? item.fields.editor.toString().toLowerCase().replaceAll(/,/g, "") : ""),
                 abstract: item.fields.abstract,
               };
             } else {
